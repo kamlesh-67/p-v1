@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damaged Stock — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="bg-gray-50/50">
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-[1600px] mx-auto">
+    
+    <div class="flex flex-col lg:flex-row gap-8">
+      
+      <!-- Left Sidebar: Categories/Divisions -->
+      <aside class="w-full lg:w-64 shrink-0">
+        <div class="ph-card p-6 sticky top-24">
+          <h3 class="font-display font-bold text-gray-900 tracking-tight mb-6">Damage Status</h3>
+          <div class="space-y-4">
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-gray-200 text-red-600 focus:ring-red-500" checked>
+              <span class="text-xs font-semibold text-gray-700">Physical Damage</span>
+            </label>
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-gray-200 text-red-600 focus:ring-red-500">
+              <span class="text-xs font-semibold text-gray-700">Packaging Defect</span>
+            </label>
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-gray-200 text-red-600 focus:ring-red-500">
+              <span class="text-xs font-semibold text-gray-700">Electronic Failure</span>
+            </label>
+            <label class="flex items-center gap-3 group cursor-pointer">
+               <input type="checkbox" class="w-4 h-4 rounded border-gray-200 text-red-600 focus:ring-red-500">
+               <span class="text-xs font-semibold text-gray-700">Expired/Short Life</span>
+            </label>
+          </div>
+
+          <hr class="my-6 border-gray-100">
+
+          <h3 class="font-display font-bold text-gray-900 tracking-tight mb-4">Divisions</h3>
+          <div class="space-y-2">
+            <button class="w-full text-left p-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-primary-700 transition-colors">Watches</button>
+            <button class="w-full text-left p-2 rounded-lg text-xs font-bold text-primary-700 bg-primary-50">Fashion & Style</button>
+            <button class="w-full text-left p-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-primary-700 transition-colors">Beauty (Non-Liquid)</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Area -->
+      <section class="flex-1 min-w-0">
+        
+        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+           <div>
+             <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">Damaged Stock</h2>
+             <p class="text-sm text-gray-400 mt-1">Review items currently marked as non-sellable.</p>
+           </div>
+           
+           <div class="relative w-full md:max-w-sm">
+             <input type="text" class="ph-input pl-10 py-2.5 text-xs shadow-sm border-gray-100" placeholder="Search damaged records...">
+             <svg class="w-3.5 h-3.5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+           </div>
+        </div>
+
+        <!-- Damaged Stock Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          
+          <!-- Damage Card 1 -->
+          <div class="ph-card overflow-hidden bg-white border-red-50">
+            <div class="aspect-[4/3] relative bg-gray-50">
+              <img src="https://images.unsplash.com/photo-1549462980-6a0149021465?w=400&q=80" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-red-900/10 flex items-center justify-center backdrop-grayscale-[0.5]">
+                 <span class="bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl">Damaged Unit</span>
+              </div>
+            </div>
+            <div class="p-6">
+               <div class="flex justify-between items-start mb-2">
+                 <h4 class="text-sm font-bold text-gray-900">Premium Leather Case</h4>
+                 <span class="text-[10px] font-bold text-red-600 uppercase">Physical</span>
+               </div>
+               <p class="text-[10px] font-mono text-gray-400 mb-6">SKU: PKG-LDR-01 / ITEM: E7232</p>
+               
+               <div class="space-y-3 pt-4 border-t border-gray-50 mb-6">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Damaged Quantity</span>
+                    <span class="font-bold text-red-600">08 Units</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Last Assessment</span>
+                    <span class="text-gray-600">Mar 08, 2024</span>
+                  </div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-3">
+                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 border border-gray-100 rounded hover:bg-gray-50 transition-colors">Discard</button>
+                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-primary-600 bg-primary-50 rounded hover:bg-primary-100 transition-colors">Repair Request</button>
+               </div>
+            </div>
+          </div>
+
+          <!-- Damage Card 2 -->
+          <div class="ph-card overflow-hidden bg-white border-red-50">
+            <div class="aspect-[4/3] relative bg-gray-50">
+              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-red-900/10 flex items-center justify-center backdrop-grayscale-[0.5]">
+                 <span class="bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl">Q.A Failed</span>
+              </div>
+            </div>
+            <div class="p-6">
+               <div class="flex justify-between items-start mb-2">
+                 <h4 class="text-sm font-bold text-gray-900">Series X Sport Bracelet</h4>
+                 <span class="text-[10px] font-bold text-red-600 uppercase">Packaging</span>
+               </div>
+               <p class="text-[10px] font-mono text-gray-400 mb-6">SKU: WAT-BRC-S / ITEM: E7721</p>
+               
+               <div class="space-y-3 pt-4 border-t border-gray-50 mb-6">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Damaged Quantity</span>
+                    <span class="font-bold text-red-600">14 Units</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Last Assessment</span>
+                    <span class="text-gray-600">Feb 28, 2024</span>
+                  </div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-3">
+                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 border border-gray-100 rounded hover:bg-gray-50 transition-colors">Discard</button>
+                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-primary-600 bg-primary-50 rounded hover:bg-primary-100 transition-colors">Repackage</button>
+               </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('damaged-stock', 'Damaged Stock');
+</script>
+</body>
+</html>

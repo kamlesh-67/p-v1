@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forward Order Details — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="forward-order-list.html" class="hover:text-primary-700">Forward Orders</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">ORD-FWD-6672</span>
+    </nav>
+
+    <div class="mb-6 flex items-start justify-between">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">Forward Order Details</h2>
+        <div class="flex gap-3 mt-1 items-center">
+          <span class="font-mono text-sm font-semibold text-primary-700">ORD-FWD-6672</span>
+          <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+          <span class="text-xs text-gray-500 uppercase tracking-wider font-medium">Expected Delivery: Mar 15, 2024</span>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2 px-4 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export PO
+        </button>
+        <button class="btn btn-primary text-sm py-2 px-6">Edit Order</button>
+      </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Contact Information -->
+        <div class="ph-card p-6 grid md:grid-cols-2 gap-8">
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Delivery Recipient</h3>
+             <p class="text-sm text-gray-900 font-semibold text-lg">Vikram Malhotra</p>
+             <p class="text-sm text-gray-600 mt-1">+91 91234 56789</p>
+           </div>
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Notification Group</h3>
+             <div class="flex flex-wrap gap-2">
+               <span class="px-2 py-1 bg-primary-50 text-primary-700 rounded text-[10px] font-medium border border-primary-100 uppercase">Sales Contact</span>
+               <span class="px-2 py-1 bg-gray-50 text-gray-600 rounded text-[10px] font-medium border border-gray-200 uppercase">Warehouse CC</span>
+             </div>
+           </div>
+        </div>
+
+        <!-- Order Specification -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50">
+            <h3 class="text-sm font-semibold text-gray-900">Order Specification</h3>
+          </div>
+          <div class="p-6 grid md:grid-cols-3 gap-6">
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Order Type</p>
+              <p class="text-sm text-gray-900 font-medium">Standard Delivery</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Priority</p>
+              <span class="badge badge-amber uppercase font-bold text-[10px]">High</span>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Reason</p>
+              <p class="text-sm text-gray-900 font-medium">New Sale (Direct)</p>
+            </div>
+            <div class="md:col-span-3">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Additional Instructions</p>
+              <div class="mt-2 p-4 rounded bg-gray-50 border border-gray-100 text-sm text-gray-600 leading-relaxed italic">
+                "Deliver after 2 PM. Call recipient before reaching the main gate. Fragile items included, ensure upright position during transport."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Shipping Timeline</h3>
+          </div>
+          <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+             <!-- Connector Line -->
+             <div class="hidden md:block absolute top-[60px] left-[15%] right-[15%] h-[2px] bg-gray-100"></div>
+             
+             <div class="text-center relative z-10">
+               <div class="w-10 h-10 rounded-full bg-white border-2 border-primary-600 flex items-center justify-center mx-auto mb-3 shadow-sm">
+                 <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 12h12l3-12H3z"/></svg>
+               </div>
+               <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Pickup Date</p>
+               <p class="text-xs text-gray-900 font-semibold mt-1">Mar 12, 10:00 AM</p>
+             </div>
+             <div class="text-center relative z-10">
+               <div class="w-10 h-10 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center mx-auto mb-3">
+                 <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+               </div>
+               <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Dispatch Date</p>
+               <p class="text-xs text-gray-400 mt-1">Pending Confirmation</p>
+             </div>
+             <div class="text-center relative z-10">
+               <div class="w-10 h-10 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center mx-auto mb-3">
+                  <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </div>
+               <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Expected Delivery</p>
+               <p class="text-xs text-gray-400 mt-1">Mar 15, 2024</p>
+             </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-6">
+        <!-- Documentation Gallery -->
+        <div class="ph-card p-6">
+          <h3 class="text-[10px] font-bold text-gray-900 mb-4 uppercase tracking-[0.2em]">Documentation</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 rounded border border-gray-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all cursor-pointer group">
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <div class="flex flex-col">
+                  <span class="text-xs font-medium text-gray-700">PurchaseOrder.pdf</span>
+                  <span class="text-[9px] text-gray-400">1.2 MB • Mar 10</span>
+                </div>
+              </div>
+              <svg class="w-3.5 h-3.5 text-gray-300 group-hover:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded border border-gray-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all cursor-pointer group">
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="flex flex-col">
+                  <span class="text-xs font-medium text-gray-700">ItemPhoto_Label.jpg</span>
+                  <span class="text-[9px] text-gray-400">0.8 MB • Mar 10</span>
+                </div>
+              </div>
+              <svg class="w-3.5 h-3.5 text-gray-300 group-hover:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('forward-order', 'Forward Order Details');
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Master — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-7xl mx-auto">
+    
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="font-display text-xl font-bold text-slate-900 tracking-tight">User Master</h2>
+        <p class="text-sm font-medium text-slate-500 mt-1">Directory of all platform users and their access levels.</p>
+      </div>
+      <a href="user-master-create.html" class="btn btn-primary text-sm py-2 px-4 shadow-sm flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Add New User
+      </a>
+    </div>
+
+    <!-- Table -->
+    <div class="ph-card overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Screen Name</th>
+              <th>Role</th>
+              <th>Category</th>
+              <th>Last Active</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-gray-50/50 cursor-pointer" onclick="location.href='user-master-detail.html'">
+              <td>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
+                    <span class="text-primary-700 font-bold text-xs">AK</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-slate-900">Amit Kumar</p>
+                    <p class="text-xs font-bold text-slate-500">amit.k@partnerhub.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="text-sm text-gray-600 font-mono">ak_ops_lead</span></td>
+              <td><span class="text-xs font-semibold text-gray-700 bg-gray-100 px-2 py-0.5 rounded">Administrator</span></td>
+              <td><span class="text-sm text-gray-500">Logistics</span></td>
+              <td><span class="text-xs text-gray-400">10 mins ago</span></td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-2 text-gray-400">
+                  <button class="p-1 hover:text-primary-700 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+                  <button class="p-1 hover:text-red-500 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                </div>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50 cursor-pointer" onclick="location.href='user-master-detail.html'">
+              <td>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+                    <span class="text-amber-700 font-bold text-xs">RP</span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Rahul Prasad</p>
+                    <p class="text-xs text-gray-400">rahul.p@partnerhub.com</p>
+                  </div>
+                </div>
+              </td>
+              <td><span class="text-sm text-gray-600 font-mono">r_prasad</span></td>
+              <td><span class="text-xs font-semibold text-gray-700 bg-gray-100 px-2 py-0.5 rounded">Warehouse Manager</span></td>
+              <td><span class="text-sm text-gray-500">Inventory</span></td>
+              <td><span class="text-xs text-gray-400">Yesterday</span></td>
+              <td class="text-right">
+                 <div class="flex items-center justify-end gap-2 text-gray-400">
+                  <button class="p-1 hover:text-primary-700 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+                  <button class="p-1 hover:text-red-500 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('user-master', 'User Master');
+</script>
+</body>
+</html>

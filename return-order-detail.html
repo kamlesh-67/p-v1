@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return Booking Details — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="return-order-list.html" class="hover:text-primary-700">Return Orders</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">RET-2024-0412</span>
+    </nav>
+
+    <div class="mb-6 flex items-start justify-between">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">Return Booking Details</h2>
+        <div class="flex gap-3 mt-1 items-center">
+          <span class="font-mono text-sm font-semibold text-primary-700">RET-2024-0412</span>
+          <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+          <span class="text-xs text-gray-500 uppercase tracking-wider font-medium">Scheduled for Mar 12, 11:30 AM</span>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2 px-6">Cancel Booking</button>
+        <button class="btn btn-primary text-sm py-2 px-6 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          Modify Booking
+        </button>
+      </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Contact & Location -->
+        <div class="ph-card p-6 grid md:grid-cols-2 gap-8">
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Contact Person</h3>
+             <p class="text-sm text-gray-900 font-semibold text-lg">Mahesh Kumar</p>
+             <p class="text-sm text-gray-600 mt-1">+91 99887 76655</p>
+           </div>
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Notification Watchers</h3>
+             <div class="space-y-1">
+               <p class="text-sm text-gray-600">qa-audit@company.com</p>
+               <p class="text-sm text-gray-600">logistics-ops@company.com</p>
+             </div>
+           </div>
+        </div>
+
+        <!-- Return Details -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Return Specification</h3>
+          </div>
+          <div class="p-6 grid md:grid-cols-2 gap-8">
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Pickup Type</p>
+              <p class="text-sm text-gray-900 font-medium font-lg">Doorstep Pickup</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Return Reason / Type</p>
+              <span class="badge badge-amber text-[11px] font-semibold">Defective / Damaged</span>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Internal Feedback</p>
+              <div class="p-4 rounded bg-gray-50 border border-gray-100 text-sm text-gray-600 leading-relaxed italic">
+                "Customer reported that the outer casing was cracked upon arrival. Needs immediate inspection at QC department."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attachments -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Evidence & Attachments</h3>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="aspect-square rounded border border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-100 transition-colors">
+                 <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                 <span class="text-[10px] text-gray-400 text-center px-2">DamageReport_1.jpg</span>
+              </div>
+              <div class="aspect-square rounded border border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-100 transition-colors">
+                 <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                 <span class="text-[10px] text-gray-400 text-center px-2">Invoice_Copy.pdf</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-6">
+        <!-- Status & Tracking -->
+        <div class="ph-card p-6">
+          <h3 class="text-[10px] font-bold text-gray-900 mb-6 uppercase tracking-[0.2em]">Booking Status</h3>
+          
+          <div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
+            <div class="relative">
+              <div class="absolute -left-8 top-1 w-6 h-6 rounded-full bg-green-100 border-2 border-white flex items-center justify-center">
+                <div class="w-2 h-2 rounded-full bg-green-600"></div>
+              </div>
+              <p class="text-xs font-bold text-gray-900">Booking Confirmed</p>
+              <p class="text-[10px] text-gray-400 mt-0.5">Mar 10, 04:30 PM</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-8 top-1 w-6 h-6 rounded-full bg-primary-100 border-2 border-white flex items-center justify-center">
+                <div class="w-2 h-2 rounded-full bg-primary-600"></div>
+              </div>
+              <p class="text-xs font-bold text-gray-900">Pickup Scheduled</p>
+              <p class="text-[10px] text-gray-400 mt-0.5">Assigned to: Agent X-42</p>
+            </div>
+            <div class="relative opacity-40">
+              <div class="absolute -left-8 top-1 w-6 h-6 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center"></div>
+              <p class="text-xs font-bold text-gray-400">Agent in Transit</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('return-order', 'Return Booking Details');
+</script>
+</body>
+</html>

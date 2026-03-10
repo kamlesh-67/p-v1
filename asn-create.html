@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASN Creation — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="asn-list.html" class="hover:text-primary-700">ASN Management</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">Create New ASN</span>
+    </nav>
+
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900 tracking-tight">Advanced Shipping Notice (ASN)</h2>
+        <p class="text-sm text-gray-400 mt-1">Notify the warehouse about an incoming shipment for faster processing.</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="asn-list.html" class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2">Cancel</a>
+        <button form="create-asn-form" type="submit" class="btn btn-primary text-sm py-2 px-6">Submit ASN</button>
+      </div>
+    </div>
+
+    <form id="create-asn-form" class="space-y-6 pb-12">
+      
+      <!-- Reference Details -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+          Shipment Reference
+        </h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div>
+            <label class="ph-label">PO Reference No</label>
+            <input type="text" class="ph-input" placeholder="e.g. PO-8872-2024" required>
+          </div>
+          <div>
+            <label class="ph-label">Pickup Date & Time</label>
+            <input type="datetime-local" class="ph-input" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Details -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Logistics Contact
+        </h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <label class="ph-label">Contact Person Name</label>
+            <input type="text" class="ph-input" placeholder="Sender's point of contact">
+          </div>
+          <div>
+            <label class="ph-label">Contact Person Phone No</label>
+            <input type="text" class="ph-input" placeholder="+91 XXXX XXXX">
+          </div>
+          <div>
+            <label class="ph-label">Watchers Email</label>
+            <input type="text" class="ph-input" placeholder="Notification emails">
+          </div>
+        </div>
+      </div>
+
+      <!-- Item List Section -->
+      <div class="ph-card">
+         <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Shipment Contents</h3>
+            <button type="button" class="text-xs text-primary-700 font-bold hover:underline">+ Add Another Item</button>
+         </div>
+         <div class="p-6">
+            <div class="grid md:grid-cols-3 gap-6 items-end border-b border-gray-50 pb-6 mb-6">
+               <div class="md:col-span-2">
+                 <label class="ph-label">Select Item</label>
+                 <select class="ph-input">
+                   <option value="">Choose item from master...</option>
+                   <option>Premium Watch Series X</option>
+                   <option>ErgoKeys Mechanical 75%</option>
+                   <option>SwiftRun Pro Sneakers</option>
+                 </select>
+               </div>
+               <div>
+                 <label class="ph-label">Quantity</label>
+                 <input type="number" class="ph-input" placeholder="0">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Documentation -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Feedback & Documentation
+        </h3>
+        <div class="grid md:grid-cols-2 gap-8">
+           <div>
+             <label class="ph-label">ASN Feedback / Remarks</label>
+             <textarea class="ph-input" rows="4" placeholder="Mention any special handling instructions or pallet count..."></textarea>
+           </div>
+           <div>
+             <label class="ph-label">Packing List / Attachment</label>
+             <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-md hover:border-primary-300 transition-colors cursor-pointer bg-gray-50/50">
+                <div class="space-y-1 text-center">
+                  <svg class="mx-auto h-8 w-8 text-gray-300" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M24 14v10m0 0v10m0-10h10m-10 0H14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <p class="text-xs text-gray-600">Click to upload packing list</p>
+                  <p class="text-[10px] text-gray-400">PDF, Excel up to 5MB</p>
+                </div>
+             </div>
+           </div>
+        </div>
+      </div>
+
+    </form>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('asn-creation', 'ASN Creation');
+</script>
+</body>
+</html>

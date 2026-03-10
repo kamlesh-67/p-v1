@@ -127,25 +127,77 @@ function showCartToast(productName) {
   setTimeout(() => { toast.style.opacity = '0'; }, 2500);
 }
 
+function exportData() {
+  showGenericToast('Preparing report for download...', 'info');
+  setTimeout(() => {
+    showGenericToast('Data exported successfully (CSV)', 'success');
+  }, 1500);
+}
+
+function showGenericToast(message, type = 'success') {
+  let toast = document.getElementById('ph-toast-generic');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'ph-toast-generic';
+    toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] transition-all duration-300 pointer-events-none';
+    document.body.appendChild(toast);
+  }
+  
+  const icon = type === 'success' 
+    ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>'
+    : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+    
+  toast.innerHTML = `
+    <div class="flex items-center gap-3 bg-slate-900 shadow-2xl text-white text-xs font-black uppercase tracking-widest px-6 py-4 rounded-xl border border-slate-800">
+      <svg class="w-4 h-4 text-primary-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">${icon}</svg>
+      <span>${message}</span>
+    </div>`;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translate(-50%, 0)';
+  setTimeout(() => { 
+    toast.style.opacity = '0';
+    toast.style.transform = 'translate(-50%, 20px)';
+  }, 3000);
+}
+
 // ------------------------------------------------
 // SIDEBAR HTML
 // ------------------------------------------------
 function getSidebarHTML(active) {
   const nav = [
     { id: 'dashboard', label: 'Dashboard', href: 'dashboard.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>' },
-    { id: 'products', label: 'Products', href: 'products.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>' },
-    { id: 'stock', label: 'Stock', href: 'stock.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>' },
-    { id: 'orders', label: 'Orders', href: 'orders.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
-    { id: 'analytics', label: 'Analytics', href: 'analytics.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>' },
-    { id: 'partners', label: 'Partners', href: 'partners.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>' },
-    { id: 'billing', label: 'Billing', href: 'billing.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>' },
+    
+    { section: 'Stock Management' },
+    { id: 'available-stock', label: 'Available Stock', href: 'available-stock.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>' },
+    { id: 'damaged-stock', label: 'Damaged Stock', href: 'damaged-stock.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>' },
+    { id: 'store-stock', label: 'Store Stock', href: 'store-stock.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>' },
+
+    { section: 'Masters' },
+    { id: 'item-master', label: 'Item Master', href: 'item-master-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>' },
+    { id: 'address-master', label: 'Address Master', href: 'address-master-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>' },
+    { id: 'user-master', label: 'User Master', href: 'user-master-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>' },
+
+    { section: 'Orders & ASN' },
+    { id: 'return-order', label: 'Return Order', href: 'return-order-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2z"/>' },
+    { id: 'asn-creation', label: 'ASN Creation', href: 'asn-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>' },
+    { id: 'adhoc-return', label: 'Ad-hoc Return', href: 'adhoc-return-list.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
+
+    { section: 'Analytics' },
+    { id: 'analytics', label: 'Analytics', href: 'analytics.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>' },
+    
+    { section: 'Configuration' },
     { id: 'settings', label: 'Settings', href: 'settings.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>' },
-    { id: 'cart', label: 'Cart', href: 'cart.html', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>' },
   ];
 
   const user = JSON.parse(localStorage.getItem('ph_user') || '{"name":"Demo User","company":"PartnerHub Inc."}');
 
   const navItems = nav.map(item => {
+    if (item.section) {
+      return `
+        <div class="px-5 transition-all duration-300 ${item.section === 'Masters' ? 'pt-2' : 'pt-5'} pb-1">
+          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em]">${item.section}</span>
+        </div>`;
+    }
     const isActive = item.id === active;
     return `
       <a href="${item.href}" class="flex items-center gap-3 px-3 py-2 rounded text-sm transition-colors ${isActive ? 'bg-primary-50 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}">
@@ -171,11 +223,6 @@ function getSidebarHTML(active) {
         </div>
         <span class="font-semibold text-gray-900 text-sm tracking-tight">PartnerHub</span>
         <span class="ml-auto text-xs text-gray-400 bg-gray-50 border border-gray-100 px-1.5 py-0.5 rounded">B2B</span>
-      </div>
-
-      <!-- Nav Label -->
-      <div class="px-5 pt-5 pb-1">
-        <span class="text-xs font-medium text-gray-400 uppercase tracking-widest">Navigation</span>
       </div>
 
       <!-- Navigation -->
@@ -225,6 +272,13 @@ function getHeaderHTML(title) {
         <h1 class="text-sm font-semibold text-gray-900 tracking-tight">${title}</h1>
 
         <div class="flex items-center gap-2 ml-auto">
+          <!-- Export Button -->
+          <button onclick="exportData()" class="p-2 rounded text-slate-500 hover:bg-slate-100 hover:text-primary-700 transition-colors group relative" title="Export Data">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+          </button>
+
           <!-- Cart Button -->
           <button onclick="openCartDrawer()" class="relative p-2 rounded text-gray-500 hover:bg-gray-100 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -310,9 +364,8 @@ function refreshCartDrawer() {
               <div class="flex items-center border border-gray-200 rounded overflow-hidden">
                 <button onclick="updateCartQty(${item.id}, ${item.qty - 1})" class="px-2 py-0.5 text-gray-500 hover:bg-gray-50 text-sm transition-colors">-</button>
                 <span class="px-2 text-xs font-medium text-gray-700 border-x border-gray-200">${item.qty}</span>
-                <button onclick="updateCartQty(${item.id}, ${item.qty + 1})" class="px-2 py-0.5 text-gray-500 hover:bg-gray-50 text-sm transition-colors">+</button>
+                <button onclick="updateCartQty(${item.id}, ${item.qty + 1})" class="px-2 py-1 text-gray-500 hover:bg-gray-50 text-sm transition-colors">+</button>
               </div>
-              <span class="text-sm font-semibold text-gray-900">$${(item.price * item.qty).toFixed(2)}</span>
             </div>
           </div>
           <button onclick="removeFromCart(${item.id})" class="shrink-0 p-1 text-gray-300 hover:text-red-500 transition-colors self-start mt-0.5">
@@ -323,17 +376,14 @@ function refreshCartDrawer() {
         </div>`).join('') +
       `</div>`;
 
-    const subtotal = getCartSubtotal();
     footerEl.innerHTML = `
       <div class="flex justify-between text-sm text-gray-600">
-        <span>Subtotal (${getCartCount()} items)</span>
-        <span class="font-semibold text-gray-900">$${subtotal.toFixed(2)}</span>
+        <span>Total Items</span>
+        <span class="font-bold text-gray-900">${getCartCount()} Units</span>
       </div>
-      <div class="flex justify-between text-xs text-gray-400">
-        <span>Shipping calculated at checkout</span>
-      </div>
-      <a href="cart.html" class="block w-full text-center text-sm font-medium text-gray-700 border border-gray-200 rounded px-4 py-2 hover:bg-gray-50 transition-colors">View Cart</a>
-      <a href="checkout.html" class="block w-full text-center text-sm font-medium text-white bg-primary-700 rounded px-4 py-2 hover:bg-primary-800 transition-colors">Checkout</a>`;
+      <div class="pt-2">
+        <a href="checkout.html" class="block w-full text-center text-sm font-bold text-white bg-primary-700 rounded-lg px-4 py-3 hover:bg-primary-800 transition-all shadow-md uppercase tracking-wider">Proceed to Checkout</a>
+      </div>`;
   }
   updateCartBadge();
 }

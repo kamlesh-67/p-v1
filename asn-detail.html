@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASN Details — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="asn-list.html" class="hover:text-primary-700">ASN Management</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">ASN-88219</span>
+    </nav>
+
+    <div class="mb-6 flex items-start justify-between">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">ASN Details</h2>
+        <div class="flex gap-3 mt-1 items-center">
+          <span class="font-mono text-sm font-semibold text-primary-700">ASN-88219</span>
+          <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+          <span class="text-xs text-gray-500 uppercase tracking-wider font-medium">Ref PO: PO-PRM-1002</span>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2 px-6 flex items-center gap-2">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+           Download Packing List
+        </button>
+        <button class="btn btn-primary text-sm py-2 px-6">Edit ASN</button>
+      </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- General Info -->
+        <div class="ph-card p-6 grid md:grid-cols-2 gap-8">
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Shipment Reference</h3>
+             <div class="space-y-3">
+               <div>
+                  <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Inbound Pickup Date</p>
+                  <p class="text-sm text-gray-900 font-semibold">Mar 14, 2024 (09:00 AM)</p>
+               </div>
+               <div>
+                  <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Status</p>
+                  <span class="badge badge-blue">Anticipated at Warehouse</span>
+               </div>
+             </div>
+           </div>
+           <div>
+             <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Point of Contact</h3>
+             <div class="space-y-1">
+               <p class="text-sm text-gray-900 font-semibold">Sanjay Singh</p>
+               <p class="text-xs text-gray-500 font-medium">+91 88776 65544</p>
+               <div class="mt-4">
+                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Watchers CC</p>
+                 <p class="text-xs text-gray-500 font-medium italic">shipping-desk@logistics.com</p>
+               </div>
+             </div>
+           </div>
+        </div>
+
+        <!-- Contents -->
+        <div class="ph-card overflow-hidden">
+          <div class="px-5 py-4 border-b border-gray-50">
+            <h3 class="text-sm font-semibold text-gray-900">Shipment Contents</h3>
+          </div>
+          <table class="ph-table">
+            <thead>
+              <tr>
+                <th>Item Details</th>
+                <th>Category</th>
+                <th class="text-center">Expected Qty</th>
+                <th class="text-center">Actual Recd</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-900">Premium Watch Series X</span>
+                    <span class="text-[10px] text-gray-400 font-mono">SKU-PRM-001</span>
+                  </div>
+                </td>
+                <td><span class="text-xs text-gray-500">Watches</span></td>
+                <td class="text-center"><span class="text-sm font-semibold text-gray-900">50</span></td>
+                <td class="text-center"><span class="text-gray-300">—</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-900">ErgoKeys Mechanical 75%</span>
+                    <span class="text-[10px] text-gray-400 font-mono">SKU-KB-042</span>
+                  </div>
+                </td>
+                <td><span class="text-xs text-gray-500">Peripherals</span></td>
+                <td class="text-center"><span class="text-sm font-semibold text-gray-900">70</span></td>
+                <td class="text-center"><span class="text-gray-300">—</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Remarks -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Feedback & Remarks</h3>
+          </div>
+          <div class="p-6">
+            <div class="p-4 rounded bg-amber-50 border border-amber-100/50 text-sm text-amber-900 italic leading-relaxed">
+              "Handle with care. 5 pallets total. Ensure QC verification for Watch Series X serial numbers on arrival."
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-6">
+         <!-- Document Checklist -->
+         <div class="ph-card p-6">
+           <h3 class="text-[10px] font-bold text-gray-900 mb-6 uppercase tracking-[0.2em]">Compliance Checklist</h3>
+           <div class="space-y-4">
+             <div class="flex items-center gap-3">
+               <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </div>
+               <span class="text-xs text-gray-700">Packing List Uploaded</span>
+             </div>
+             <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="text-xs text-gray-700">PO Reference Validated</span>
+              </div>
+              <div class="flex items-center gap-3 opacity-40">
+                <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="text-xs text-gray-400">Warehouse Receipt Signed</span>
+              </div>
+           </div>
+         </div>
+         
+         <div class="ph-card p-5 bg-gray-900 text-white">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">System Log</p>
+            <div class="text-[10px] space-y-2 font-mono">
+              <p><span class="text-primary-400">04:30 PM:</span> ASN Created by Admin</p>
+              <p><span class="text-primary-400">04:35 PM:</span> Email sent to Sanjay Singh</p>
+            </div>
+         </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('asn-creation', 'ASN Details');
+</script>
+</body>
+</html>

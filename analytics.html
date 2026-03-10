@@ -23,7 +23,7 @@
   </script>
   <link rel="stylesheet" href="css/custom.css">
 </head>
-<body>
+<body class="bg-gray-50/50">
 
 <div id="sidebar-container"></div>
 <div id="cart-drawer-container"></div>
@@ -31,46 +31,185 @@
 <div class="page-shell">
   <div id="header-container"></div>
   <main class="p-6 max-w-7xl mx-auto">
-    <div class="mb-6">
-      <h2 class="font-display text-xl font-bold text-gray-900">Analytics Insights</h2>
-      <p class="text-sm text-gray-400 mt-0.5">Performance metrics across your partner network.</p>
+    <!-- Page Header -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Supply Chain Analytics</h2>
+        <p class="text-sm font-medium text-slate-500 mt-1">Deep dive into stock health, fulfillment velocity, and damage metrics.</p>
+      </div>
+      <div class="flex items-center gap-3">
+         <select class="ph-input text-[10px] font-black uppercase tracking-widest py-2 bg-white ring-1 ring-slate-200">
+            <option>Last 30 Days</option>
+            <option>Last Quarter</option>
+            <option>Last Year</option>
+         </select>
+         <button class="bg-white border border-slate-200 p-2 rounded-lg text-slate-400 hover:text-primary-700 transition-colors shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+         </button>
+      </div>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-6 mb-8">
-      <div class="lg:col-span-2 ph-card p-6">
-         <h3 class="text-sm font-semibold mb-6">Revenue Growth</h3>
-         <div class="chart-box">
-            <div class="chart-bar h-[40%] bg-primary-200"></div>
-            <div class="chart-bar h-[60%] bg-primary-300"></div>
-            <div class="chart-bar h-[50%] bg-primary-400"></div>
-            <div class="chart-bar h-[85%] bg-primary-600"></div>
-            <div class="chart-bar h-[70%] bg-primary-700"></div>
-         </div>
-      </div>
-      <div class="ph-card p-6">
-         <h3 class="text-sm font-semibold mb-4">Distribution</h3>
-         <div class="space-y-4 pt-4">
-            <div class="flex items-center justify-between">
-               <span class="text-xs text-gray-500">Global Partners</span>
-               <span class="text-xs font-bold text-gray-900">42%</span>
-            </div>
-            <div class="w-full bg-gray-50 h-1.5 rounded-full overflow-hidden">
-               <div class="bg-primary-600 h-full w-[42%]"></div>
-            </div>
-            <div class="flex items-center justify-between">
-               <span class="text-xs text-gray-500">Local Distribution</span>
-               <span class="text-xs font-bold text-gray-900">58%</span>
-            </div>
-            <div class="w-full bg-gray-50 h-1.5 rounded-full overflow-hidden">
-               <div class="bg-amber-400 h-full w-[58%]"></div>
+    <!-- Analytics Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      
+      <!-- Stock Aging & Fulfillment Velocity -->
+      <div class="lg:col-span-2 ph-card p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+         <div class="flex items-center justify-between mb-8">
+            <h3 class="font-display text-xs font-black text-slate-900 tracking-widest uppercase">Fulfillment Velocity (Units/Day)</h3>
+            <div class="flex items-center gap-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span> Inbound</span>
+               <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Outbound</span>
             </div>
          </div>
+         <div class="h-64 flex items-end gap-3 px-2">
+            <!-- Monday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[60%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[40%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Mon</span>
+            </div>
+            <!-- Tuesday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[45%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[70%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Tue</span>
+            </div>
+            <!-- Wednesday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[80%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[30%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Wed</span>
+            </div>
+            <!-- Thursday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[55%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[85%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Thu</span>
+            </div>
+            <!-- Friday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[90%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[50%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Fri</span>
+            </div>
+            <!-- Saturday -->
+            <div class="flex-1 h-full flex flex-col gap-1 items-center group">
+               <div class="w-full flex-1 flex items-end gap-1">
+                  <div class="flex-1 bg-indigo-600/20 h-[20%] rounded-t-sm group-hover:bg-indigo-600 transition-all"></div>
+                  <div class="flex-1 bg-amber-500/20 h-[15%] rounded-t-sm group-hover:bg-amber-500 transition-all"></div>
+               </div>
+               <span class="text-[9px] font-black text-slate-400 mt-2 uppercase tracking-tighter group-hover:text-slate-900 transition-colors">Sat</span>
+            </div>
+         </div>
       </div>
+
+      <!-- Damage & Return Insights -->
+      <div class="ph-card p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+         <h3 class="font-display text-xs font-black text-slate-900 tracking-widest uppercase mb-8">Damage Root Cause</h3>
+         <div class="space-y-6">
+            <div class="space-y-2">
+               <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span class="text-slate-500">Transit Damage</span>
+                  <span class="text-slate-900">62%</span>
+               </div>
+               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-indigo-600 h-full w-[62%] transition-all duration-1000"></div>
+               </div>
+            </div>
+            <div class="space-y-2">
+               <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span class="text-slate-500">Warehouse Handling</span>
+                  <span class="text-slate-900">22%</span>
+               </div>
+               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-500 h-full w-[22%] transition-all duration-1000"></div>
+               </div>
+            </div>
+            <div class="space-y-2">
+               <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span class="text-slate-500">Defective Returns</span>
+                  <span class="text-slate-900">11%</span>
+               </div>
+               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-red-500 h-full w-[11%] transition-all duration-1000"></div>
+               </div>
+            </div>
+         </div>
+         <div class="mt-8 pt-8 border-t border-slate-50">
+            <div class="p-4 rounded-xl bg-slate-50/50 border border-slate-100 flex items-center justify-between">
+               <div>
+                  <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Total Damaged Units</p>
+                  <p class="text-lg font-black text-slate-900">428</p>
+               </div>
+               <div class="text-right">
+                  <p class="text-[9px] font-black text-red-500 uppercase tracking-widest">+4.2%</p>
+                  <p class="text-[8px] font-bold text-slate-400">vs last month</p>
+               </div>
+            </div>
+         </div>
+      </div>
+
     </div>
+
+    <!-- Inventory Health Table -->
+    <div class="ph-card overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm animate-fadeup animate-fadeup-4">
+       <div class="px-8 py-6 border-b border-slate-50 bg-slate-50/30 flex items-center justify-between">
+          <div>
+            <h3 class="font-display text-sm font-bold text-slate-900 tracking-tight">Stock Performance by Category</h3>
+            <p class="text-[10px] text-slate-500 font-bold font-sans">Analyzing turnover and replenishment needs.</p>
+          </div>
+          <button class="text-[10px] font-black uppercase text-primary-700 tracking-widest py-2 px-4 bg-white border border-primary-100 rounded-lg shadow-sm hover:bg-primary-50 transition-colors">Export Details</button>
+       </div>
+       <table class="ph-table w-full">
+          <thead>
+             <tr class="bg-slate-50">
+                <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-widest">Product Category</th>
+                <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-widest">Average Turnover</th>
+                <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-widest">Out of Stock Incidents</th>
+                <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-widest">Wastage / Expiry</th>
+                <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-widest text-center">Health</th>
+             </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+             <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-8 py-4 text-xs font-bold text-slate-900">Electronic Gadgets</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">14.2 Days</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">2 events</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">0.2%</td>
+                <td class="px-8 py-4 text-center"><span class="badge badge-green">Healthy</span></td>
+             </tr>
+             <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-8 py-4 text-xs font-bold text-slate-900">Premium Leather Bags</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">32.8 Days</td>
+                <td class="px-8 py-4 text-xs text-red-600 font-black">12 events</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">1.4%</td>
+                <td class="px-8 py-4 text-center"><span class="badge badge-red">Critical</span></td>
+             </tr>
+             <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-8 py-4 text-xs font-bold text-slate-900">Precision Watches</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">22.5 Days</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">5 events</td>
+                <td class="px-8 py-4 text-xs text-slate-600 font-medium">0.8%</td>
+                <td class="px-8 py-4 text-center"><span class="badge badge-amber">Warning</span></td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+
   </main>
 </div>
 
 <script src="js/app.js"></script>
-<script>initPage('analytics', 'Analytics');</script>
+<script>initPage('analytics', 'Supply Chain Analytics');</script>
 </body>
 </html>

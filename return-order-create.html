@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return Order Booking — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-4xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="return-order-list.html" class="hover:text-primary-700">Return Orders</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">Book Return Order</span>
+    </nav>
+
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900 tracking-tight">Book Return Order</h2>
+        <p class="text-sm text-gray-400 mt-1">Request a return pickup for products from your customers.</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="return-order-list.html" class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2">Cancel</a>
+        <button form="book-return-form" type="submit" class="btn btn-primary text-sm py-2 px-6">Book Return</button>
+      </div>
+    </div>
+
+    <form id="book-return-form" class="space-y-6 pb-12">
+      
+      <!-- Contact Details -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Pickup Contact Details
+        </h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="ph-label">Contact Person Name</label>
+            <input type="text" class="ph-input" placeholder="Name of person at location" required>
+          </div>
+          <div>
+            <label class="ph-label">Contact Person Phone No</label>
+            <input type="text" class="ph-input" placeholder="+91 XXXX XXXX" required>
+          </div>
+          <div class="md:col-span-2">
+            <label class="ph-label">Watchers Email</label>
+            <input type="text" class="ph-input" placeholder="Comma separated notification emails">
+          </div>
+        </div>
+      </div>
+
+      <!-- Return Details -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+          Return & Pickup Specification
+        </h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="ph-label">Pickup Type</label>
+            <select class="ph-input">
+              <option value="">Select Type</option>
+              <option value="doorstep">Doorstep Pickup</option>
+              <option value="drop_off">Self Drop-off</option>
+              <option value="third_party">3PL Coordinator</option>
+            </select>
+          </div>
+          <div>
+            <label class="ph-label">Return Type</label>
+            <select class="ph-input">
+              <option value="">Select Return Reason</option>
+              <option value="defective">Defective / Damaged</option>
+              <option value="wrong_item">Wrong Item Sent</option>
+              <option value="customer_refused">Customer Refused</option>
+              <option value="size_issue">Size / Fit Issue</option>
+            </select>
+          </div>
+          <div>
+            <label class="ph-label">Pickup Date & Time</label>
+            <input type="datetime-local" class="ph-input" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback & Attachments -->
+      <div class="ph-card p-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-5 pb-4 border-b border-gray-100 flex items-center gap-2">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+          Feedback & Documentation
+        </h3>
+        <div class="space-y-4">
+          <div>
+            <label class="ph-label">Feedback / Notes</label>
+            <textarea class="ph-input" rows="3" placeholder="Provide additional details or special instructions..."></textarea>
+          </div>
+          <div>
+            <label class="ph-label">Attachments (Photos/Documents)</label>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-md hover:border-primary-300 transition-colors cursor-pointer">
+              <div class="space-y-1 text-center">
+                <svg class="mx-auto h-8 w-8 text-gray-300" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <path d="M24 14v10m0 0v10m0-10h10m-10 0H14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="flex text-xs text-gray-600">
+                   <span class="font-medium text-primary-700">Upload files</span>
+                   <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-[10px] text-gray-400">PDF, JPG up to 5MB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('return-order', 'Book Return Order');
+</script>
+</body>
+</html>

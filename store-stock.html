@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Stock — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+  <style>
+    .tree-content { transition: all 0.3s ease-in-out; }
+    .tree-content.collapsed { display: none; }
+    .tree-chevron { transition: transform 0.2s ease; }
+    .tree-chevron.collapsed { transform: rotate(0deg); }
+  </style>
+</head>
+<body class="bg-gray-50/50">
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-[1600px] mx-auto">
+    
+    <div class="flex flex-col lg:flex-row gap-8">
+      
+      <!-- Left Sidebar: Divisions Tree -->
+      <aside class="w-full lg:w-64 shrink-0">
+        <div class="ph-card p-6 sticky top-24">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-display font-bold text-gray-900 tracking-tight">Divisions</h3>
+            <button class="p-1 text-gray-400 hover:text-primary-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+          </div>
+          
+          <div class="space-y-1 select-none">
+            <!-- Level 1 -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
+                <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
+                <svg class="tree-chevron w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <span class="text-[13px] font-bold text-gray-900">Watches & Fine Jewelry</span>
+              </div>
+              
+              <div class="tree-content pl-7 space-y-1 border-l border-gray-100 ml-3.5">
+                <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
+                  <svg class="tree-chevron w-3.5 h-3.5 text-gray-400 Transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
+                  <span class="text-xs font-medium text-gray-600">Marketing CRM</span>
+                </div>
+                
+                <div class="tree-content pl-8 space-y-1">
+                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
+                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                    <span class="text-xs text-gray-500 group-hover:text-primary-700 transition-colors">Gift</span>
+                  </label>
+                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
+                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                    <span class="text-xs text-gray-500 group-hover:text-primary-700 transition-colors">Marketing Tools</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- PR -->
+            <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
+              <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              <span class="text-[13px] font-bold text-gray-900 uppercase">PR</span>
+            </div>
+          </div>
+
+          <hr class="my-6 border-gray-100">
+
+          <h3 class="font-display font-bold text-gray-900 tracking-tight mb-4">Stores</h3>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="radio" name="store_filter" class="w-4 h-4 text-primary-600 focus:ring-primary-500" checked>
+              <span class="text-xs font-semibold text-gray-700">Main Hub (Blr)</span>
+            </label>
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="radio" name="store_filter" class="w-4 h-4 text-primary-600 focus:ring-primary-500">
+              <span class="text-xs font-semibold text-gray-700">Retail Outlet A</span>
+            </label>
+            <label class="flex items-center gap-3 group cursor-pointer">
+              <input type="radio" name="store_filter" class="w-4 h-4 text-primary-600 focus:ring-primary-500">
+              <span class="text-xs font-semibold text-gray-700">North Region Center</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Area -->
+      <section class="flex-1 min-w-0">
+        
+        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+           <div>
+             <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">Store Stock</h2>
+             <p class="text-sm text-gray-400 mt-1">Inventory breakdown across specific store locations.</p>
+           </div>
+           <div class="flex gap-3">
+              <button class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-xs py-2 px-4 shadow-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Export CSV
+              </button>
+           </div>
+        </div>
+
+        <!-- Store Stock Table -->
+        <div class="ph-card overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="ph-table">
+              <thead>
+                <tr>
+                   <th>Item Detail</th>
+                   <th>Store Location</th>
+                   <th class="text-center">On Hand</th>
+                   <th class="text-center">Committed</th>
+                   <th class="text-center">Available</th>
+                   <th>Last Audited</th>
+                   <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-gray-50/30">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded border border-gray-100 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&q=80" class="w-full h-full object-cover"></div>
+                      <div>
+                        <p class="text-[13px] font-bold text-gray-900 leading-none mb-1">Premium Watch X</p>
+                        <p class="text-[10px] font-mono text-gray-400">SKU: WAT-PRM-101</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="text-xs text-gray-600 font-medium">Main Hub - Blr</span></td>
+                  <td class="text-center text-xs font-bold text-gray-900">1,500</td>
+                  <td class="text-center text-xs font-medium text-amber-600">200</td>
+                  <td class="text-center text-xs font-black text-primary-700">1,300</td>
+                  <td><span class="text-[11px] text-gray-400">Mar 09, 2024</span></td>
+                  <td class="text-right">
+                    <button class="p-1.5 text-gray-400 hover:text-primary-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50/30">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded border border-gray-100 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=100&q=80" class="w-full h-full object-cover"></div>
+                      <div>
+                        <p class="text-[13px] font-bold text-gray-900 leading-none mb-1">Executive Chrono</p>
+                        <p class="text-[10px] font-mono text-gray-400">SKU: WAT-EXE-44</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="text-xs text-gray-600 font-medium">Retail Outlet A</span></td>
+                  <td class="text-center text-xs font-bold text-gray-900">420</td>
+                  <td class="text-center text-xs font-medium text-amber-600">50</td>
+                  <td class="text-center text-xs font-black text-primary-700">370</td>
+                  <td><span class="text-[11px] text-gray-400">Mar 05, 2024</span></td>
+                  <td class="text-right">
+                    <button class="p-1.5 text-gray-400 hover:text-primary-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('store-stock', 'Store Stock');
+
+  function toggleTree(element) {
+    const container = element.parentElement;
+    const content = container.querySelector('.tree-content');
+    const chevron = element.querySelector('.tree-chevron');
+    
+    if (content) {
+      content.classList.toggle('collapsed');
+      if (chevron) {
+        chevron.classList.toggle('collapsed');
+      }
+    }
+  }
+</script>
+</body>
+</html>

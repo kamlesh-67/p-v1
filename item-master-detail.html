@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Details — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-4 text-xs font-medium text-gray-400 gap-2 items-center">
+      <a href="dashboard.html" class="hover:text-primary-700">Dashboard</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="item-master-list.html" class="hover:text-primary-700">Item Master</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="text-gray-900">SKU-PRM-001</span>
+    </nav>
+
+    <div class="mb-6 flex items-start justify-between">
+      <div class="flex gap-4">
+        <div class="w-16 h-16 rounded-lg bg-gray-50 border border-gray-100 overflow-hidden shrink-0">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h2 class="font-display text-2xl font-bold text-gray-900 tracking-tight">Premium Watch Series X</h2>
+          <div class="flex gap-3 mt-1 items-center">
+            <span class="font-mono text-sm font-semibold text-primary-700">SKU-PRM-001</span>
+            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+            <span class="text-xs text-gray-500 uppercase tracking-wider font-medium">Electronics • Watches</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn border-gray-200 text-gray-600 hover:bg-gray-50 text-sm py-2 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print Barcode
+        </button>
+        <button class="btn btn-primary text-sm py-2 px-6 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          Edit Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      
+      <!-- Main Info -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Information Overview</h3>
+          </div>
+          <div class="p-6 grid md:grid-cols-2 gap-y-6 gap-x-12">
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Display Item Number</p>
+              <p class="text-sm text-gray-900 font-medium">ITEM-PRM-001X</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Barcode</p>
+              <p class="text-sm text-gray-900 font-mono">1234567890123</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Stock Quantity</p>
+              <p class="text-sm text-gray-900 font-bold text-lg">1,240 <span class="text-xs font-medium text-gray-400">PCS</span></p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Inventory Status</p>
+              <span class="badge badge-green">Active In-Stock</span>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Short Description</p>
+              <p class="text-sm text-gray-600 leading-relaxed">Luxury smart watch with sapphire crystal and leather strap.</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Long Description</p>
+              <p class="text-sm text-gray-600 leading-relaxed">The Premium Watch Series X represents the pinnacle of wearable technology combined with classic craftsmanship. Featuring a 1.5-inch AMOLED display, heart rate monitoring, GPS, and water resistance up to 50 meters. The casing is made from aerospace-grade titanium, ensuring durability without adding weight.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorization -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Categorization & Classification</h3>
+          </div>
+          <div class="p-6 grid md:grid-cols-3 gap-6">
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Store Code</p>
+              <p class="text-sm text-gray-900">MAIN_WH_BLR</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Category</p>
+              <p class="text-sm text-gray-900">Electronics</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Sub Category</p>
+              <p class="text-sm text-gray-900">Watches</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">HS Code</p>
+              <p class="text-sm text-gray-900">9102.11.00</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Style</p>
+              <p class="text-sm text-gray-900">Executive / Sport</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Gallery -->
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-900">Product Gallery</h3>
+            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">4 Images</span>
+          </div>
+          <div class="p-6">
+             <div class="grid md:grid-cols-4 gap-4">
+                <div class="md:col-span-3 aspect-video rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-gray-50 relative group">
+                  <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80" class="w-full h-full object-cover">
+                  <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button class="bg-white/90 p-2 rounded-full shadow-lg"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+                  </div>
+                </div>
+                <div class="space-y-4">
+                  <div class="aspect-square rounded-lg overflow-hidden border-2 border-primary-500 shadow-sm cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80" class="w-full h-full object-cover">
+                  </div>
+                  <div class="aspect-square rounded-lg overflow-hidden border border-gray-100 hover:border-primary-300 transition-colors cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1508685096489-7aac29bba227?w=200&q=80" class="w-full h-full object-cover">
+                  </div>
+                  <div class="aspect-square rounded-lg overflow-hidden border border-gray-100 hover:border-primary-300 transition-colors cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=200&q=80" class="w-full h-full object-cover">
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Info -->
+      <div class="space-y-6">
+        
+        <div class="ph-card">
+          <div class="px-5 py-4 border-b border-gray-50">
+            <h3 class="text-sm font-semibold text-gray-900">Physical Details</h3>
+          </div>
+          <div class="p-6 space-y-5">
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">UOM</p>
+              <p class="text-sm text-gray-900">Piece</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Weight</p>
+              <p class="text-sm text-gray-900">0.25 kg</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Dimensions</p>
+              <p class="text-sm text-gray-900">10 × 10 × 5 cm</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Color Code</p>
+              <div class="flex items-center gap-2 mt-1">
+                <div class="w-4 h-4 rounded-full border border-gray-200" style="background-color: #1a1a1a;"></div>
+                <span class="text-sm text-gray-900">Midnight Black (#1A1A1A)</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Size</p>
+              <p class="text-sm text-gray-900">42mm (Universal)</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Special Packing</p>
+              <span class="badge badge-gray">Not Required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ph-card p-5">
+          <h3 class="text-xs font-bold text-gray-900 mb-3 uppercase tracking-wider">System Info</h3>
+          <div class="space-y-2 text-[11px] text-gray-400">
+            <div class="flex justify-between"><span>Created by</span><span class="text-gray-600">Admin User</span></div>
+            <div class="flex justify-between"><span>Created on</span><span class="text-gray-600">Jan 12, 2024</span></div>
+            <div class="flex justify-between"><span>Last updated</span><span class="text-gray-600">Mar 05, 2024</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('item-master', 'Item Details');
+</script>
+</body>
+</html>
