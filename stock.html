@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-7xl mx-auto">
+
+    <!-- Page Header -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6 animate-fadeup animate-fadeup-1">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900">Stock Management</h2>
+        <p class="text-sm text-gray-400 mt-0.5">Monitor and adjust inventory levels</p>
+      </div>
+      <button onclick="openAdjustModal()" class="btn btn-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+        </svg>
+        Adjust Stock
+      </button>
+    </div>
+
+    <!-- Overview Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5 animate-fadeup animate-fadeup-2">
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Total SKUs</p>
+        <p class="font-display text-2xl font-bold text-gray-900 mt-1">12</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">In Stock</p>
+        <p class="font-display text-2xl font-bold text-green-700 mt-1" id="in-stock-count">—</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Low Stock</p>
+        <p class="font-display text-2xl font-bold text-amber-600 mt-1" id="low-stock-count">—</p>
+      </div>
+      <div class="stat-card">
+        <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">Out of Stock</p>
+        <p class="font-display text-2xl font-bold text-red-600 mt-1" id="out-stock-count">—</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="ph-card p-4 mb-4 flex flex-wrap gap-3 items-center animate-fadeup animate-fadeup-3">
+      <div class="relative flex-1 min-w-44">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="s-search" type="text" class="ph-input pl-9" placeholder="Search products…" oninput="renderStockTable()">
+      </div>
+      <select id="s-cat" class="ph-input ph-select w-auto min-w-36" onchange="renderStockTable()">
+        <option value="">All Categories</option>
+        <option>Laptops</option><option>Audio</option><option>Accessories</option>
+        <option>Cameras</option><option>Peripherals</option><option>Footwear</option>
+        <option>Monitors</option><option>Bags</option>
+      </select>
+      <select id="s-status" class="ph-input ph-select w-auto min-w-36" onchange="renderStockTable()">
+        <option value="">All Status</option>
+        <option value="in">In Stock</option>
+        <option value="low">Low Stock</option>
+        <option value="out">Out of Stock</option>
+      </select>
+    </div>
+
+    <!-- Stock Table -->
+    <div class="ph-card overflow-hidden animate-fadeup animate-fadeup-4">
+      <div class="overflow-x-auto">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>SKU</th>
+              <th>Category</th>
+              <th>Unit Price</th>
+              <th>Stock Qty</th>
+              <th>Level</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="stock-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Low Stock Alert Banner -->
+    <div id="low-alert-banner" class="hidden mt-4 border border-amber-200 bg-amber-50 rounded p-4 animate-fadeup">
+      <div class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+        <div>
+          <p class="text-sm font-semibold text-amber-800">Reorder Required</p>
+          <p class="text-xs text-amber-700 mt-0.5" id="low-alert-text"></p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Adjust Stock Modal -->
+<div id="adjust-modal" class="ph-modal-backdrop hidden" onclick="closeAdjustOnBackdrop(event)">
+  <div class="ph-modal p-6" onclick="event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="font-display text-base font-semibold text-gray-900">Adjust Stock</h3>
+      <button onclick="closeAdjustModal()" class="p-1.5 rounded text-gray-400 hover:bg-gray-100">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form onsubmit="submitAdjustment(event)" class="space-y-4">
+      <div>
+        <label class="ph-label">Product</label>
+        <select id="adj-product" class="ph-input ph-select">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="ph-label">Adjustment Type</label>
+          <select id="adj-type" class="ph-input ph-select">
+            <option value="add">Add Stock (Receipt)</option>
+            <option value="remove">Remove Stock (Loss/Return)</option>
+            <option value="set">Set Exact Quantity</option>
+          </select>
+        </div>
+        <div>
+          <label class="ph-label">Quantity</label>
+          <input id="adj-qty" type="number" min="1" class="ph-input" placeholder="0" required>
+        </div>
+      </div>
+      <div>
+        <label class="ph-label">Reason / Note <span class="text-gray-400 font-normal">(optional)</span></label>
+        <input type="text" class="ph-input" placeholder="e.g. New shipment received">
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="button" onclick="closeAdjustModal()" class="btn btn-outline flex-1 justify-center">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-1 justify-center">Apply Adjustment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('stock', 'Stock');
+
+  // Live stock data (mutable copy)
+  let stockData = PH_PRODUCTS.map(p => ({ ...p }));
+
+  function stockStatus(stock) {
+    if (stock === 0) return { cls: 'badge-red', label: 'Out of Stock', barColor: '#dc2626', pct: 0 };
+    if (stock <= 10) return { cls: 'badge-amber', label: 'Low Stock', barColor: '#d97706', pct: Math.min((stock / 10) * 40 + 10, 50) };
+    return { cls: 'badge-green', label: 'In Stock', barColor: '#16a34a', pct: Math.min((stock / 150) * 100, 100) };
+  }
+
+  function updateStatsBar() {
+    document.getElementById('in-stock-count').textContent = stockData.filter(p => p.stock > 10).length;
+    document.getElementById('low-stock-count').textContent = stockData.filter(p => p.stock > 0 && p.stock <= 10).length;
+    document.getElementById('out-stock-count').textContent = stockData.filter(p => p.stock === 0).length;
+
+    const lowItems = stockData.filter(p => p.stock > 0 && p.stock <= 10);
+    const outItems = stockData.filter(p => p.stock === 0);
+    const banner = document.getElementById('low-alert-banner');
+    if (lowItems.length > 0 || outItems.length > 0) {
+      banner.classList.remove('hidden');
+      const parts = [];
+      if (outItems.length) parts.push(`${outItems.length} product(s) are out of stock`);
+      if (lowItems.length) parts.push(`${lowItems.length} product(s) are running low`);
+      document.getElementById('low-alert-text').textContent = parts.join(' and ') + '. Consider placing a reorder.';
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+
+  function renderStockTable() {
+    const q = document.getElementById('s-search').value.toLowerCase();
+    const cat = document.getElementById('s-cat').value;
+    const statusF = document.getElementById('s-status').value;
+
+    const filtered = stockData.filter(p => {
+      const mq = !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q);
+      const mc = !cat || p.category === cat;
+      const ms = !statusF ||
+        (statusF === 'in' && p.stock > 10) ||
+        (statusF === 'low' && p.stock > 0 && p.stock <= 10) ||
+        (statusF === 'out' && p.stock === 0);
+      return mq && mc && ms;
+    });
+
+    const tbody = document.getElementById('stock-tbody');
+    tbody.innerHTML = filtered.map(p => {
+      const s = stockStatus(p.stock);
+      return `
+        <tr>
+          <td>
+            <div class="flex items-center gap-3">
+              <img src="${p.image}" class="w-9 h-9 rounded object-cover border border-gray-100 shrink-0" loading="lazy">
+              <span class="text-sm font-medium text-gray-900">${p.name}</span>
+            </div>
+          </td>
+          <td><span class="font-mono text-xs text-gray-500">${p.sku}</span></td>
+          <td><span class="text-sm text-gray-600">${p.category}</span></td>
+          <td><span class="text-sm font-medium text-gray-900">$${p.price.toFixed(2)}</span></td>
+          <td>
+            <span class="text-sm font-semibold ${p.stock === 0 ? 'text-red-600' : p.stock <= 10 ? 'text-amber-600' : 'text-gray-900'}">${p.stock}</span>
+            <span class="text-xs text-gray-400 ml-1">${p.unit}s</span>
+          </td>
+          <td>
+            <div class="stock-bar">
+              <div class="stock-bar-fill" style="width:${s.pct}%;background:${s.barColor}"></div>
+            </div>
+          </td>
+          <td><span class="badge ${s.cls}">${s.label}</span></td>
+          <td>
+            <div class="flex gap-1">
+              <button onclick="quickAdjust(${p.id})" class="btn btn-outline btn-sm">Adjust</button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-sm text-gray-400">No products match your filters</td></tr>`;
+    }
+  }
+
+  function openAdjustModal() {
+    const sel = document.getElementById('adj-product');
+    sel.innerHTML = stockData.map(p => `<option value="${p.id}">${p.name} (${p.sku}) — ${p.stock} in stock</option>`).join('');
+    document.getElementById('adjust-modal').classList.remove('hidden');
+  }
+
+  function closeAdjustModal() { document.getElementById('adjust-modal').classList.add('hidden'); }
+  function closeAdjustOnBackdrop(e) { if (e.target === document.getElementById('adjust-modal')) closeAdjustModal(); }
+
+  function quickAdjust(id) {
+    openAdjustModal();
+    document.getElementById('adj-product').value = id;
+  }
+
+  function submitAdjustment(e) {
+    e.preventDefault();
+    const id = parseInt(document.getElementById('adj-product').value);
+    const type = document.getElementById('adj-type').value;
+    const qty = parseInt(document.getElementById('adj-qty').value) || 0;
+    const p = stockData.find(x => x.id === id);
+    if (p) {
+      if (type === 'add') p.stock += qty;
+      else if (type === 'remove') p.stock = Math.max(0, p.stock - qty);
+      else if (type === 'set') p.stock = qty;
+    }
+    closeAdjustModal();
+    renderStockTable();
+    updateStatsBar();
+    showCartToast('Stock adjusted successfully');
+  }
+
+  renderStockTable();
+  updateStatsBar();
+</script>
+</body>
+</html>

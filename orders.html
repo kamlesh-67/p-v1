@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-7xl mx-auto">
+
+    <!-- Page Header -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6 animate-fadeup animate-fadeup-1">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900">Orders</h2>
+        <p class="text-sm text-gray-400 mt-0.5">Track and manage all purchase orders</p>
+      </div>
+      <a href="checkout.html" class="btn btn-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        New Order
+      </a>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5 animate-fadeup animate-fadeup-2">
+      <div class="stat-card cursor-pointer hover:border-gray-300 transition-colors" onclick="filterByStatus('')" id="tab-all">
+        <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">All</p>
+        <p class="font-display text-xl font-bold text-gray-900 mt-1" id="cnt-all">8</p>
+      </div>
+      <div class="stat-card cursor-pointer hover:border-gray-300 transition-colors" onclick="filterByStatus('pending')" id="tab-pending">
+        <p class="text-xs text-amber-500 uppercase tracking-wide font-medium">Pending</p>
+        <p class="font-display text-xl font-bold text-amber-600 mt-1" id="cnt-pending">—</p>
+      </div>
+      <div class="stat-card cursor-pointer hover:border-gray-300 transition-colors" onclick="filterByStatus('processing')" id="tab-processing">
+        <p class="text-xs text-blue-500 uppercase tracking-wide font-medium">Processing</p>
+        <p class="font-display text-xl font-bold text-blue-600 mt-1" id="cnt-processing">—</p>
+      </div>
+      <div class="stat-card cursor-pointer hover:border-gray-300 transition-colors" onclick="filterByStatus('shipped')" id="tab-shipped">
+        <p class="text-xs text-primary-600 uppercase tracking-wide font-medium">Shipped</p>
+        <p class="font-display text-xl font-bold text-primary-700 mt-1" id="cnt-shipped">—</p>
+      </div>
+      <div class="stat-card cursor-pointer hover:border-gray-300 transition-colors" onclick="filterByStatus('delivered')" id="tab-delivered">
+        <p class="text-xs text-green-600 uppercase tracking-wide font-medium">Delivered</p>
+        <p class="font-display text-xl font-bold text-green-700 mt-1" id="cnt-delivered">—</p>
+      </div>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="ph-card p-4 mb-4 flex flex-wrap gap-3 items-center animate-fadeup animate-fadeup-3">
+      <div class="relative flex-1 min-w-44">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="o-search" type="text" class="ph-input pl-9" placeholder="Search order ID, customer…" oninput="renderOrders()">
+      </div>
+      <select id="o-payment" class="ph-input ph-select w-auto min-w-36" onchange="renderOrders()">
+        <option value="">All Payment Methods</option>
+        <option>Bank Transfer</option>
+        <option>Credit Card</option>
+      </select>
+      <div class="flex items-center gap-2 ml-auto text-xs text-gray-500">
+        <span id="order-count">8</span> orders
+      </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="ph-card overflow-hidden animate-fadeup animate-fadeup-4">
+      <div class="overflow-x-auto">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Order Detail Modal -->
+<div id="order-modal" class="ph-modal-backdrop hidden" onclick="closeOrderModalOnBackdrop(event)">
+  <div class="ph-modal" onclick="event.stopPropagation()" style="max-width:620px">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+      <h3 class="font-display text-base font-semibold text-gray-900" id="modal-order-id">Order Detail</h3>
+      <button onclick="closeOrderModal()" class="p-1.5 rounded text-gray-400 hover:bg-gray-100">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="modal-order-body" class="p-6 space-y-5"></div>
+    <div class="px-6 pb-5 flex gap-3">
+      <button onclick="closeOrderModal()" class="btn btn-outline flex-1 justify-center">Close</button>
+      <button class="btn btn-primary flex-1 justify-center">Download Invoice</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('orders', 'Orders');
+
+  const statusConfig = {
+    pending:    { cls: 'badge-amber',  label: 'Pending' },
+    processing: { cls: 'badge-blue',   label: 'Processing' },
+    shipped:    { cls: 'badge-purple', label: 'Shipped' },
+    delivered:  { cls: 'badge-green',  label: 'Delivered' },
+    cancelled:  { cls: 'badge-red',    label: 'Cancelled' },
+  };
+
+  let activeStatus = '';
+
+  function updateCounts() {
+    const statuses = ['pending','processing','shipped','delivered','cancelled'];
+    document.getElementById('cnt-all').textContent = PH_ORDERS.length;
+    statuses.forEach(s => {
+      const el = document.getElementById('cnt-' + s);
+      if (el) el.textContent = PH_ORDERS.filter(o => o.status === s).length;
+    });
+  }
+
+  function filterByStatus(status) {
+    activeStatus = status;
+    renderOrders();
+  }
+
+  function renderOrders() {
+    const q = document.getElementById('o-search').value.toLowerCase();
+    const pay = document.getElementById('o-payment').value;
+
+    const filtered = PH_ORDERS.filter(o => {
+      const mq = !q || o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q);
+      const ms = !activeStatus || o.status === activeStatus;
+      const mp = !pay || o.payment === pay;
+      return mq && ms && mp;
+    });
+
+    document.getElementById('order-count').textContent = filtered.length;
+
+    const tbody = document.getElementById('orders-tbody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-sm text-gray-400">No orders match your filters</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(o => {
+      const s = statusConfig[o.status] || { cls: 'badge-gray', label: o.status };
+      return `
+        <tr>
+          <td><span class="font-mono text-xs text-primary-700 font-medium">${o.id}</span></td>
+          <td><span class="text-sm text-gray-500">${o.date}</span></td>
+          <td><span class="text-sm font-medium text-gray-900">${o.customer}</span></td>
+          <td><span class="text-sm text-gray-600">${o.items} item${o.items > 1 ? 's' : ''}</span></td>
+          <td><span class="text-sm font-semibold text-gray-900">$${o.total.toLocaleString('en-US',{minimumFractionDigits:2})}</span></td>
+          <td><span class="text-xs text-gray-500">${o.payment}</span></td>
+          <td><span class="badge ${s.cls}">${s.label}</span></td>
+          <td>
+            <button onclick="viewOrder('${o.id}')" class="btn btn-ghost btn-sm text-primary-700">View</button>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  function viewOrder(id) {
+    const o = PH_ORDERS.find(x => x.id === id);
+    if (!o) return;
+    const s = statusConfig[o.status] || { cls: 'badge-gray', label: o.status };
+
+    // Generate sample line items from products
+    const lineItems = PH_PRODUCTS.slice(0, o.items).map((p, i) => ({
+      ...p,
+      qty: Math.ceil(Math.random() * 3) || 1,
+    }));
+
+    document.getElementById('modal-order-id').textContent = o.id;
+    document.getElementById('modal-order-body').innerHTML = `
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1">
+          <p class="text-xs text-gray-400 uppercase tracking-wide">Customer</p>
+          <p class="text-sm font-semibold text-gray-900">${o.customer}</p>
+        </div>
+        <div class="space-y-1">
+          <p class="text-xs text-gray-400 uppercase tracking-wide">Order Date</p>
+          <p class="text-sm text-gray-700">${o.date}</p>
+        </div>
+        <div class="space-y-1">
+          <p class="text-xs text-gray-400 uppercase tracking-wide">Payment</p>
+          <p class="text-sm text-gray-700">${o.payment}</p>
+        </div>
+        <div class="space-y-1">
+          <p class="text-xs text-gray-400 uppercase tracking-wide">Status</p>
+          <span class="badge ${s.cls}">${s.label}</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-xs text-gray-400 uppercase tracking-wide mb-2">Line Items</p>
+        <div class="ph-card overflow-hidden">
+          <table class="ph-table">
+            <thead><tr><th>Product</th><th>SKU</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
+            <tbody>${lineItems.map(item => `
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <img src="${item.image}" class="w-7 h-7 rounded object-cover border border-gray-100">
+                    <span class="text-sm text-gray-800">${item.name}</span>
+                  </div>
+                </td>
+                <td><span class="font-mono text-xs text-gray-400">${item.sku}</span></td>
+                <td><span class="text-sm text-gray-700">${item.qty}</span></td>
+                <td><span class="text-sm text-gray-700">$${item.price.toFixed(2)}</span></td>
+                <td><span class="text-sm font-semibold text-gray-900">$${(item.price * item.qty).toFixed(2)}</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="border-t border-gray-100 pt-3 flex justify-between items-center">
+        <span class="text-sm text-gray-500">Order Total</span>
+        <span class="font-display text-lg font-bold text-gray-900">$${o.total.toLocaleString('en-US',{minimumFractionDigits:2})}</span>
+      </div>`;
+    document.getElementById('order-modal').classList.remove('hidden');
+  }
+
+  function closeOrderModal() { document.getElementById('order-modal').classList.add('hidden'); }
+  function closeOrderModalOnBackdrop(e) { if (e.target === document.getElementById('order-modal')) closeOrderModal(); }
+
+  updateCounts();
+  renderOrders();
+</script>
+</body>
+</html>

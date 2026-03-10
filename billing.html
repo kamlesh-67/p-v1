@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+<div class="page-shell">
+  <div id="header-container"></div>
+  <main class="p-6 max-w-7xl mx-auto">
+    <div class="mb-6">
+      <h2 class="font-display text-xl font-bold text-gray-900">Billing & Subscription</h2>
+      <p class="text-sm text-gray-400 mt-0.5">Manage your service tier and see history.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6 mb-8">
+      <div class="ph-card p-8 bg-primary-700 text-white border-none shadow-lg">
+         <p class="text-[10px] font-bold text-primary-200 uppercase tracking-widest mb-2">Current Plan</p>
+         <h2 class="text-3xl font-display font-bold mb-4">Partner Pro</h2>
+         <p class="text-sm text-primary-100 mb-8 max-w-xs">Full access to advanced analytics, priority fulfillment, and custom reports.</p>
+         <div class="flex items-center gap-4">
+            <button class="px-6 py-2.5 bg-white text-primary-700 rounded text-xs font-bold uppercase transition-colors hover:bg-primary-50">Manage Plan</button>
+            <span class="text-xs text-primary-300">Next bill: April 1, 2024</span>
+         </div>
+      </div>
+      <div class="ph-card p-6 flex flex-col justify-between">
+         <h3 class="text-sm font-semibold text-gray-900">Quick Settlement</h3>
+         <div class="pt-6">
+            <div class="flex items-center justify-between mb-2">
+               <span class="text-xs text-gray-500">Total Unpaid</span>
+               <span class="text-xl font-bold text-gray-900">$2,410.50</span>
+            </div>
+            <button class="w-full btn btn-primary py-3">Pay Outstanding Balance</button>
+         </div>
+      </div>
+    </div>
+
+    <div class="ph-card overflow-hidden">
+       <div class="px-5 py-4 border-b border-gray-50">
+         <h3 class="text-sm font-semibold">Invoices</h3>
+       </div>
+       <table class="ph-table">
+          <thead>
+             <tr>
+                <th>Invoice</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr>
+                <td class="font-mono text-xs">#INV-8820</td>
+                <td class="text-gray-500">Mar 12, 2024</td>
+                <td class="font-bold">$299.00</td>
+                <td><span class="badge badge-green">Paid</span></td>
+                <td class="text-right">
+                   <button class="text-xs text-primary-700 font-medium hover:underline">Download</button>
+                </td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+  </main>
+</div>
+<script src="js/app.js"></script>
+<script>initPage('billing', 'Billing');</script>
+</body>
+</html>

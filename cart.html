@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-5xl mx-auto">
+
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-6 animate-fadeup animate-fadeup-1">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900">Shopping Cart</h2>
+        <p class="text-sm text-gray-400 mt-0.5" id="cart-item-label">— items in your cart</p>
+      </div>
+      <a href="products.html" class="btn btn-outline btn-sm">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- Empty State -->
+    <div id="cart-empty" class="hidden ph-card p-16 text-center animate-fadeup">
+      <svg class="w-14 h-14 text-gray-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+      </svg>
+      <h3 class="font-display text-base font-semibold text-gray-700 mb-1">Your cart is empty</h3>
+      <p class="text-sm text-gray-400 mb-4">Add products from the catalogue to get started</p>
+      <a href="products.html" class="btn btn-primary">Browse Products</a>
+    </div>
+
+    <!-- Cart Content -->
+    <div id="cart-content" class="grid lg:grid-cols-3 gap-5 animate-fadeup animate-fadeup-2">
+
+      <!-- Cart Items -->
+      <div class="lg:col-span-2">
+        <div class="ph-card overflow-hidden">
+          <!-- Cart Header -->
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-100 bg-gray-50/60">
+            <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Product</span>
+            <div class="flex gap-12 text-xs font-medium text-gray-400 uppercase tracking-wide">
+              <span>Qty</span>
+              <span class="w-20 text-right">Total</span>
+            </div>
+          </div>
+
+          <!-- Items List -->
+          <div id="cart-items-list" class="divide-y divide-gray-50"></div>
+
+          <!-- Clear Cart -->
+          <div class="flex justify-end px-5 py-3 border-t border-gray-100">
+            <button onclick="clearCart()" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+              Clear Cart
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Add Products -->
+        <div class="mt-4 ph-card p-4">
+          <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">You may also need</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="suggested-products"></div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="ph-card p-5 sticky top-20">
+          <h3 class="font-display text-sm font-semibold text-gray-900 mb-4">Order Summary</h3>
+
+          <div class="space-y-2.5 text-sm" id="order-summary-lines"></div>
+
+          <div class="border-t border-gray-100 mt-4 pt-4">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-gray-900">Total</span>
+              <span class="font-display text-lg font-bold text-gray-900" id="order-total">$0.00</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1">Excl. tax. Shipping at checkout.</p>
+          </div>
+
+          <div class="mt-5 space-y-2">
+            <a href="checkout.html" class="btn btn-primary w-full justify-center text-sm">
+              Proceed to Checkout
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </a>
+            <a href="products.html" class="btn btn-outline w-full justify-center text-sm">Continue Shopping</a>
+          </div>
+
+          <!-- Business Discount Info -->
+          <div class="mt-4 border border-primary-100 bg-primary-50 rounded p-3">
+            <div class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-primary-700 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+              </svg>
+              <div>
+                <p class="text-xs font-medium text-primary-800">B2B Pricing Active</p>
+                <p class="text-xs text-primary-600 mt-0.5">Bulk discounts apply at 10+ units per SKU</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('cart', 'Cart');
+
+  function renderCartPage() {
+    const label = document.getElementById('cart-item-label');
+    const emptyEl = document.getElementById('cart-empty');
+    const contentEl = document.getElementById('cart-content');
+    const itemsList = document.getElementById('cart-items-list');
+    const summaryLines = document.getElementById('order-summary-lines');
+    const totalEl = document.getElementById('order-total');
+
+    const count = getCartCount();
+    label.textContent = `${count} item${count !== 1 ? 's' : ''} in your cart`;
+
+    if (phCart.length === 0) {
+      emptyEl.classList.remove('hidden');
+      contentEl.classList.add('hidden');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+    contentEl.classList.remove('hidden');
+
+    // Render items
+    itemsList.innerHTML = phCart.map(item => `
+      <div class="flex items-center gap-4 px-5 py-4">
+        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded object-cover border border-gray-100 shrink-0">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 truncate">${item.name}</p>
+          <p class="text-xs text-gray-400 mt-0.5">${item.sku}</p>
+          <p class="text-sm font-semibold text-gray-700 mt-1">$${item.price.toFixed(2)} <span class="text-xs text-gray-400 font-normal">per unit</span></p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="flex items-center border border-gray-200 rounded overflow-hidden">
+            <button onclick="pageUpdateQty(${item.id}, ${item.qty - 1})" class="px-2.5 py-1.5 text-gray-500 hover:bg-gray-50 text-sm transition-colors">−</button>
+            <input type="number" value="${item.qty}" min="1"
+              onchange="pageUpdateQty(${item.id}, parseInt(this.value))"
+              class="w-12 text-center text-sm font-medium text-gray-900 border-x border-gray-200 py-1.5 focus:outline-none">
+            <button onclick="pageUpdateQty(${item.id}, ${item.qty + 1})" class="px-2.5 py-1.5 text-gray-500 hover:bg-gray-50 text-sm transition-colors">+</button>
+          </div>
+          <span class="w-20 text-right text-sm font-semibold text-gray-900">$${(item.price * item.qty).toFixed(2)}</span>
+          <button onclick="pageRemoveItem(${item.id})" class="p-1.5 rounded text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>`).join('');
+
+    // Order summary
+    const subtotal = getCartSubtotal();
+    const shipping = subtotal > 2000 ? 0 : 49.99;
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    summaryLines.innerHTML = `
+      <div class="flex justify-between text-gray-600">
+        <span>Subtotal (${count} items)</span>
+        <span class="font-medium text-gray-900">$${subtotal.toFixed(2)}</span>
+      </div>
+      <div class="flex justify-between text-gray-600">
+        <span>Shipping</span>
+        <span class="font-medium ${shipping === 0 ? 'text-green-600' : 'text-gray-900'}">${shipping === 0 ? 'Free' : '$' + shipping.toFixed(2)}</span>
+      </div>
+      ${shipping === 0 ? '<p class="text-xs text-green-600">Free shipping on orders over $2,000</p>' : ''}
+      <div class="flex justify-between text-gray-600">
+        <span>Tax (8%)</span>
+        <span class="font-medium text-gray-900">$${tax.toFixed(2)}</span>
+      </div>`;
+
+    totalEl.textContent = `$${total.toFixed(2)}`;
+  }
+
+  function pageUpdateQty(id, qty) {
+    updateCartQty(id, Math.max(1, qty));
+    renderCartPage();
+  }
+
+  function pageRemoveItem(id) {
+    removeFromCart(id);
+    renderCartPage();
+  }
+
+  function clearCart() {
+    if (!confirm('Remove all items from your cart?')) return;
+    phCart = [];
+    saveCart();
+    renderCartPage();
+  }
+
+  // Suggested products (not in cart)
+  function renderSuggested() {
+    const cartIds = phCart.map(i => i.id);
+    const suggestions = PH_PRODUCTS.filter(p => !cartIds.includes(p.id) && p.stock > 0).slice(0, 3);
+    const el = document.getElementById('suggested-products');
+    el.innerHTML = suggestions.map(p => `
+      <div class="border border-gray-100 rounded p-3 hover:border-gray-200 transition-colors">
+        <img src="${p.image}" class="w-full h-20 object-cover rounded mb-2 border border-gray-50" loading="lazy">
+        <p class="text-xs font-medium text-gray-800 truncate leading-snug">${p.name}</p>
+        <div class="flex items-center justify-between mt-2">
+          <span class="text-xs font-semibold text-gray-900">$${p.price.toFixed(2)}</span>
+          <button onclick="addToCart(${p.id});renderCartPage();renderSuggested();" class="text-xs btn btn-primary btn-sm px-2 py-1">Add</button>
+        </div>
+      </div>`).join('');
+  }
+
+  renderCartPage();
+  renderSuggested();
+</script>
+</body>
+</html>

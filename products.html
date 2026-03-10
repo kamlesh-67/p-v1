@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <main class="p-6 max-w-7xl mx-auto">
+
+    <!-- Page Header -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6 animate-fadeup animate-fadeup-1">
+      <div>
+        <h2 class="font-display text-xl font-bold text-gray-900">Product Master</h2>
+        <p class="text-sm text-gray-400 mt-0.5">Manage your product catalogue</p>
+      </div>
+      <button onclick="openAddModal()" class="btn btn-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Add Product
+      </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="ph-card p-4 mb-5 flex flex-wrap items-center gap-3 animate-fadeup animate-fadeup-2">
+      <div class="relative flex-1 min-w-48">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-input" type="text" class="ph-input pl-9" placeholder="Search products, SKU…" oninput="filterProducts()">
+      </div>
+      <select id="cat-filter" class="ph-input ph-select w-auto min-w-36" onchange="filterProducts()">
+        <option value="">All Categories</option>
+        <option>Laptops</option>
+        <option>Audio</option>
+        <option>Accessories</option>
+        <option>Cameras</option>
+        <option>Peripherals</option>
+        <option>Footwear</option>
+        <option>Monitors</option>
+        <option>Bags</option>
+      </select>
+      <select id="stock-filter" class="ph-input ph-select w-auto min-w-36" onchange="filterProducts()">
+        <option value="">All Stock</option>
+        <option value="in">In Stock</option>
+        <option value="low">Low Stock</option>
+        <option value="out">Out of Stock</option>
+      </select>
+      <div class="flex border border-gray-200 rounded overflow-hidden ml-auto">
+        <button id="view-grid" onclick="setView('grid')" class="px-3 py-2 bg-primary-700 text-white transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        </button>
+        <button id="view-list" onclick="setView('list')" class="px-3 py-2 bg-white text-gray-500 hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Results count -->
+    <div class="flex items-center justify-between mb-4 animate-fadeup animate-fadeup-3">
+      <p class="text-xs text-gray-400"><span id="result-count">12</span> products found</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 animate-fadeup animate-fadeup-3"></div>
+
+    <!-- Product List (hidden by default) -->
+    <div id="product-list" class="ph-card overflow-hidden hidden">
+      <div class="overflow-x-auto">
+        <table class="ph-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>SKU</th>
+              <th>Category</th>
+              <th>Price (unit)</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="product-list-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Add Product Modal -->
+<div id="add-modal" class="ph-modal-backdrop hidden" onclick="closeModalOnBackdrop(event)">
+  <div class="ph-modal p-6" onclick="event.stopPropagation()">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="font-display text-base font-semibold text-gray-900">Add New Product</h3>
+      <button onclick="closeAddModal()" class="p-1.5 rounded text-gray-400 hover:bg-gray-100">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form onsubmit="submitProduct(event)" class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label class="ph-label">Product Name</label>
+          <input type="text" class="ph-input" placeholder="e.g. ProBook Laptop 15" required>
+        </div>
+        <div>
+          <label class="ph-label">SKU</label>
+          <input type="text" class="ph-input" placeholder="LP-PRO-001" required>
+        </div>
+        <div>
+          <label class="ph-label">Category</label>
+          <select class="ph-input ph-select">
+            <option>Laptops</option><option>Audio</option><option>Accessories</option>
+            <option>Cameras</option><option>Peripherals</option><option>Footwear</option>
+            <option>Monitors</option><option>Bags</option>
+          </select>
+        </div>
+        <div>
+          <label class="ph-label">Unit Price ($)</label>
+          <input type="number" step="0.01" min="0" class="ph-input" placeholder="0.00" required>
+        </div>
+        <div>
+          <label class="ph-label">Initial Stock</label>
+          <input type="number" min="0" class="ph-input" placeholder="0" required>
+        </div>
+        <div class="col-span-2">
+          <label class="ph-label">Unit</label>
+          <select class="ph-input ph-select">
+            <option>piece</option><option>pair</option><option>set</option><option>box</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="button" onclick="closeAddModal()" class="btn btn-outline flex-1 justify-center">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-1 justify-center">Add Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('products', 'Products');
+
+  let currentView = 'grid';
+  let filtered = [...PH_PRODUCTS];
+
+  function stockStatus(stock) {
+    if (stock === 0) return { cls: 'badge-red', label: 'Out of Stock' };
+    if (stock <= 10) return { cls: 'badge-amber', label: 'Low Stock' };
+    return { cls: 'badge-green', label: 'In Stock' };
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = filtered.map(p => {
+      const s = stockStatus(p.stock);
+      return `
+        <div class="product-card animate-fadeup" style="animation-delay:${0.03}s">
+          <div class="relative">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+            <span class="badge ${s.cls} absolute top-2 right-2">${s.label}</span>
+          </div>
+          <div class="p-4">
+            <p class="text-xs text-gray-400 mb-0.5">${p.sku} · ${p.category}</p>
+            <h4 class="text-sm font-semibold text-gray-900 mb-2 leading-snug">${p.name}</h4>
+            <div class="flex items-center justify-between">
+              <span class="text-base font-bold text-gray-900">$${p.price.toFixed(2)}</span>
+              <span class="text-xs text-gray-400">${p.stock} ${p.unit}s</span>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <button onclick="addToCart(${p.id})" class="btn btn-primary btn-sm flex-1 justify-center" ${p.stock === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Add
+              </button>
+              <button class="btn btn-outline btn-sm px-2.5" title="Edit">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderList() {
+    const tbody = document.getElementById('product-list-tbody');
+    tbody.innerHTML = filtered.map(p => {
+      const s = stockStatus(p.stock);
+      return `
+        <tr>
+          <td>
+            <div class="flex items-center gap-3">
+              <img src="${p.image}" class="w-9 h-9 rounded object-cover border border-gray-100" loading="lazy">
+              <span class="text-sm font-medium text-gray-900">${p.name}</span>
+            </div>
+          </td>
+          <td><span class="font-mono text-xs text-gray-500">${p.sku}</span></td>
+          <td><span class="text-sm text-gray-600">${p.category}</span></td>
+          <td><span class="text-sm font-semibold text-gray-900">$${p.price.toFixed(2)}</span></td>
+          <td><span class="text-sm text-gray-700">${p.stock} <span class="text-gray-400">${p.unit}s</span></span></td>
+          <td><span class="badge ${s.cls}">${s.label}</span></td>
+          <td>
+            <div class="flex items-center gap-1">
+              <button onclick="addToCart(${p.id})" class="btn btn-primary btn-sm" ${p.stock === 0 ? 'disabled style="opacity:0.5"' : ''}>Add to Cart</button>
+              <button class="btn btn-ghost btn-sm px-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  function filterProducts() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const cat = document.getElementById('cat-filter').value;
+    const stockF = document.getElementById('stock-filter').value;
+
+    filtered = PH_PRODUCTS.filter(p => {
+      const matchQ = !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q);
+      const matchCat = !cat || p.category === cat;
+      const matchStock = !stockF ||
+        (stockF === 'in' && p.stock > 10) ||
+        (stockF === 'low' && p.stock > 0 && p.stock <= 10) ||
+        (stockF === 'out' && p.stock === 0);
+      return matchQ && matchCat && matchStock;
+    });
+
+    document.getElementById('result-count').textContent = filtered.length;
+    if (currentView === 'grid') renderGrid(); else renderList();
+  }
+
+  function setView(view) {
+    currentView = view;
+    document.getElementById('product-grid').classList.toggle('hidden', view !== 'grid');
+    document.getElementById('product-list').classList.toggle('hidden', view !== 'list');
+    document.getElementById('view-grid').className = `px-3 py-2 transition-colors ${view === 'grid' ? 'bg-primary-700 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`;
+    document.getElementById('view-list').className = `px-3 py-2 transition-colors ${view === 'list' ? 'bg-primary-700 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'}`;
+    if (view === 'grid') renderGrid(); else renderList();
+  }
+
+  function openAddModal() { document.getElementById('add-modal').classList.remove('hidden'); }
+  function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
+  function closeModalOnBackdrop(e) { if (e.target === document.getElementById('add-modal')) closeAddModal(); }
+
+  function submitProduct(e) {
+    e.preventDefault();
+    closeAddModal();
+    showCartToast('Product added successfully');
+  }
+
+  // Initial render
+  renderGrid();
+</script>
+</body>
+</html>

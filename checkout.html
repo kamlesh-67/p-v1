@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — PartnerHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50:'#faf5ff',100:'#f3e8ff',200:'#e9d5ff',300:'#d8b4fe',
+              400:'#c084fc',500:'#a855f7',600:'#9d4edd',700:'#7b2cbf',
+              800:'#5a189a',900:'#3c096c',
+            }
+          },
+          fontFamily: { sans: ['DM Sans','sans-serif'], display: ['Syne','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+<div id="cart-drawer-container"></div>
+
+<div class="page-shell">
+  <div id="header-container"></div>
+
+  <!-- Success Screen (hidden initially) -->
+  <div id="success-screen" class="hidden min-h-[calc(100vh-3.5rem)] flex items-center justify-center p-6">
+    <div class="text-center max-w-md animate-fadeup">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-2">Order Placed!</h2>
+      <p class="text-gray-500 text-sm mb-1">Your order has been confirmed and is being processed.</p>
+      <p class="text-sm font-medium text-primary-700 mb-6" id="success-order-id">Order #—</p>
+      <div class="ph-card p-5 text-left mb-6 space-y-2.5" id="success-summary"></div>
+      <div class="flex gap-3 justify-center">
+        <a href="orders.html" class="btn btn-primary">View Orders</a>
+        <a href="products.html" class="btn btn-outline">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Wizard -->
+  <main id="checkout-main" class="p-6 max-w-5xl mx-auto">
+
+    <!-- Page Title -->
+    <div class="mb-6 animate-fadeup animate-fadeup-1">
+      <h2 class="font-display text-xl font-bold text-gray-900">Checkout</h2>
+      <p class="text-sm text-gray-400 mt-0.5">Complete your purchase order</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="ph-card p-5 mb-5 animate-fadeup animate-fadeup-2">
+      <div class="flex items-center" id="step-indicator">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-5 animate-fadeup animate-fadeup-3">
+
+      <!-- Step Form -->
+      <div class="lg:col-span-2">
+        <div class="ph-card p-6" id="step-form-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="ph-card p-5 sticky top-20">
+          <h3 class="font-display text-sm font-semibold text-gray-900 mb-4">Order Summary</h3>
+          <div class="space-y-2 mb-4" id="co-items-list"></div>
+          <div class="border-t border-gray-100 pt-3 space-y-1.5 text-sm">
+            <div class="flex justify-between text-gray-600">
+              <span>Subtotal</span>
+              <span id="co-subtotal" class="font-medium text-gray-900">$0.00</span>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <span>Shipping</span>
+              <span id="co-shipping" class="font-medium text-gray-900">—</span>
+            </div>
+            <div class="flex justify-between text-gray-600">
+              <span>Tax (8%)</span>
+              <span id="co-tax" class="font-medium text-gray-900">$0.00</span>
+            </div>
+          </div>
+          <div class="border-t border-gray-100 mt-3 pt-3 flex justify-between">
+            <span class="font-semibold text-gray-900">Total</span>
+            <span class="font-display text-base font-bold text-gray-900" id="co-total">$0.00</span>
+          </div>
+          <div class="mt-4 text-xs text-gray-400 space-y-1">
+            <div class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              Secure checkout
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              Business verified account
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  initPage('orders', 'Checkout');
+
+  let currentStep = 1;
+  const TOTAL_STEPS = 4;
+
+  const steps = [
+    { num: 1, label: 'Billing & Shipping' },
+    { num: 2, label: 'Delivery Method' },
+    { num: 3, label: 'Payment' },
+    { num: 4, label: 'Review & Confirm' },
+  ];
+
+  // Checkout form data
+  const coData = {
+    billing: {},
+    shipping: {},
+    sameAsBilling: true,
+    delivery: 'standard',
+    payment: 'bank',
+    cardNumber: '',
+    poNumber: '',
+    notes: '',
+  };
+
+  const shippingRates = {
+    standard: { label: 'Standard Delivery (5–7 business days)', price: 0, priceLabel: 'Free on orders $2k+' },
+    express:  { label: 'Express Delivery (2–3 business days)',  price: 29.99 },
+    overnight:{ label: 'Overnight Delivery (Next business day)', price: 79.99 },
+  };
+
+  // ---- STEP INDICATOR ----
+  function renderStepIndicator() {
+    const el = document.getElementById('step-indicator');
+    el.innerHTML = steps.map((s, i) => {
+      const done = s.num < currentStep;
+      const active = s.num === currentStep;
+      return `
+        ${i > 0 ? `<div class="step-line ${s.num <= currentStep ? 'done' : ''}"></div>` : ''}
+        <div class="flex flex-col items-center gap-1 ${i > 0 ? '' : ''}">
+          <div class="step-circle ${done ? 'done' : active ? 'active' : ''}">
+            ${done ? `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>` : s.num}
+          </div>
+          <span class="text-xs ${active ? 'text-primary-700 font-medium' : done ? 'text-gray-500' : 'text-gray-400'} hidden sm:block whitespace-nowrap">${s.label}</span>
+        </div>`;
+    }).join('');
+  }
+
+  // ---- ORDER SUMMARY SIDEBAR ----
+  function renderCoSummary() {
+    const itemsList = document.getElementById('co-items-list');
+    itemsList.innerHTML = phCart.slice(0, 4).map(item => `
+      <div class="flex items-center gap-2">
+        <img src="${item.image}" class="w-8 h-8 rounded object-cover border border-gray-100 shrink-0">
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-gray-700 truncate">${item.name}</p>
+          <p class="text-xs text-gray-400">×${item.qty}</p>
+        </div>
+        <span class="text-xs font-semibold text-gray-900">$${(item.price * item.qty).toFixed(2)}</span>
+      </div>`).join('') +
+      (phCart.length > 4 ? `<p class="text-xs text-gray-400 text-center">+${phCart.length - 4} more items</p>` : '');
+
+    const subtotal = getCartSubtotal();
+    const rate = shippingRates[coData.delivery];
+    const shipping = subtotal > 2000 ? 0 : (rate ? rate.price : 0);
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    document.getElementById('co-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('co-shipping').textContent = shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`;
+    document.getElementById('co-tax').textContent = `$${tax.toFixed(2)}`;
+    document.getElementById('co-total').textContent = `$${total.toFixed(2)}`;
+  }
+
+  // ---- STEP 1: BILLING & SHIPPING ----
+  function renderStep1() {
+    document.getElementById('step-form-container').innerHTML = `
+      <h3 class="font-display text-base font-semibold text-gray-900 mb-5">Billing & Shipping Address</h3>
+      <form id="step1-form" onsubmit="submitStep1(event)" class="space-y-5">
+
+        <div>
+          <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Billing Address</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2">
+              <label class="ph-label">Company Name</label>
+              <input type="text" class="ph-input" placeholder="Acme Corporation" value="${coData.billing.company || ''}" required
+                onchange="coData.billing.company = this.value">
+            </div>
+            <div>
+              <label class="ph-label">First Name</label>
+              <input type="text" class="ph-input" placeholder="John" value="${coData.billing.firstName || ''}" required
+                onchange="coData.billing.firstName = this.value">
+            </div>
+            <div>
+              <label class="ph-label">Last Name</label>
+              <input type="text" class="ph-input" placeholder="Smith" value="${coData.billing.lastName || ''}" required
+                onchange="coData.billing.lastName = this.value">
+            </div>
+            <div class="col-span-2">
+              <label class="ph-label">Address Line 1</label>
+              <input type="text" class="ph-input" placeholder="123 Business Ave" value="${coData.billing.address1 || ''}" required
+                onchange="coData.billing.address1 = this.value">
+            </div>
+            <div class="col-span-2">
+              <label class="ph-label">Address Line 2 <span class="text-gray-400 font-normal">(optional)</span></label>
+              <input type="text" class="ph-input" placeholder="Suite 400" value="${coData.billing.address2 || ''}"
+                onchange="coData.billing.address2 = this.value">
+            </div>
+            <div>
+              <label class="ph-label">City</label>
+              <input type="text" class="ph-input" placeholder="New York" value="${coData.billing.city || ''}" required
+                onchange="coData.billing.city = this.value">
+            </div>
+            <div>
+              <label class="ph-label">State / Province</label>
+              <input type="text" class="ph-input" placeholder="NY" value="${coData.billing.state || ''}" required
+                onchange="coData.billing.state = this.value">
+            </div>
+            <div>
+              <label class="ph-label">ZIP / Postal Code</label>
+              <input type="text" class="ph-input" placeholder="10001" value="${coData.billing.zip || ''}" required
+                onchange="coData.billing.zip = this.value">
+            </div>
+            <div>
+              <label class="ph-label">Country</label>
+              <select class="ph-input ph-select" onchange="coData.billing.country = this.value">
+                <option>United States</option><option>Canada</option><option>United Kingdom</option>
+                <option>Australia</option><option>Germany</option><option>France</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <input type="checkbox" id="same-billing" class="w-4 h-4 rounded border-gray-300 accent-primary-700"
+              ${coData.sameAsBilling ? 'checked' : ''}
+              onchange="toggleShippingSection(this.checked)">
+            <label for="same-billing" class="text-sm font-medium text-gray-700">Shipping address same as billing</label>
+          </div>
+
+          <div id="shipping-section" class="${coData.sameAsBilling ? 'hidden' : ''}">
+            <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Shipping Address</h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="col-span-2">
+                <label class="ph-label">Company Name</label>
+                <input type="text" class="ph-input" placeholder="Acme Corporation" value="${coData.shipping.company || ''}">
+              </div>
+              <div class="col-span-2">
+                <label class="ph-label">Address</label>
+                <input type="text" class="ph-input" placeholder="123 Warehouse Rd" value="${coData.shipping.address1 || ''}">
+              </div>
+              <div>
+                <label class="ph-label">City</label>
+                <input type="text" class="ph-input" placeholder="New York" value="${coData.shipping.city || ''}">
+              </div>
+              <div>
+                <label class="ph-label">State</label>
+                <input type="text" class="ph-input" placeholder="NY" value="${coData.shipping.state || ''}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button type="submit" class="btn btn-primary">
+            Continue to Delivery
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+      </form>`;
+  }
+
+  function toggleShippingSection(checked) {
+    coData.sameAsBilling = checked;
+    document.getElementById('shipping-section').classList.toggle('hidden', checked);
+  }
+
+  function submitStep1(e) {
+    e.preventDefault();
+    if (!coData.billing.company) coData.billing.company = 'Demo Company';
+    if (!coData.billing.firstName) coData.billing.firstName = 'Demo';
+    if (!coData.billing.lastName) coData.billing.lastName = 'User';
+    if (!coData.billing.address1) coData.billing.address1 = '123 Business Ave';
+    if (!coData.billing.city) coData.billing.city = 'New York';
+    if (!coData.billing.state) coData.billing.state = 'NY';
+    if (!coData.billing.zip) coData.billing.zip = '10001';
+    goToStep(2);
+  }
+
+  // ---- STEP 2: DELIVERY ----
+  function renderStep2() {
+    const subtotal = getCartSubtotal();
+    document.getElementById('step-form-container').innerHTML = `
+      <h3 class="font-display text-base font-semibold text-gray-900 mb-5">Delivery Method</h3>
+      <div class="space-y-3 mb-6">
+        ${Object.entries(shippingRates).map(([key, rate]) => {
+          const effectivePrice = subtotal > 2000 && key === 'standard' ? 0 : rate.price;
+          return `
+            <label class="flex items-center gap-4 border rounded p-4 cursor-pointer transition-colors ${coData.delivery === key ? 'border-primary-300 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}"
+              onclick="selectDelivery('${key}')">
+              <input type="radio" name="delivery" value="${key}" ${coData.delivery === key ? 'checked' : ''} class="accent-primary-700 shrink-0">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900">${rate.label}</p>
+                ${rate.priceLabel && effectivePrice === 0 ? `<p class="text-xs text-green-600 mt-0.5">${rate.priceLabel}</p>` : ''}
+              </div>
+              <span class="text-sm font-semibold text-gray-900 shrink-0">${effectivePrice === 0 ? '<span class="text-green-600">Free</span>' : '$' + effectivePrice.toFixed(2)}</span>
+            </label>`;
+        }).join('')}
+      </div>
+      <div>
+        <label class="ph-label">Purchase Order Number <span class="text-gray-400 font-normal">(optional)</span></label>
+        <input type="text" class="ph-input" placeholder="PO-2024-XXXX" value="${coData.poNumber}"
+          onchange="coData.poNumber = this.value">
+      </div>
+      <div class="mt-4">
+        <label class="ph-label">Order Notes <span class="text-gray-400 font-normal">(optional)</span></label>
+        <textarea class="ph-input h-20 resize-none" placeholder="Special delivery instructions…" onchange="coData.notes = this.value">${coData.notes}</textarea>
+      </div>
+      <div class="flex gap-3 justify-between pt-4">
+        <button onclick="goToStep(1)" class="btn btn-outline">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          Back
+        </button>
+        <button onclick="goToStep(3)" class="btn btn-primary">
+          Continue to Payment
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>`;
+  }
+
+  function selectDelivery(key) {
+    coData.delivery = key;
+    renderCoSummary();
+    renderStep2();
+  }
+
+  // ---- STEP 3: PAYMENT ----
+  function renderStep3() {
+    document.getElementById('step-form-container').innerHTML = `
+      <h3 class="font-display text-base font-semibold text-gray-900 mb-5">Payment Details</h3>
+
+      <!-- Payment Method Selection -->
+      <div class="flex gap-3 mb-5">
+        <label class="flex items-center gap-2 border rounded px-4 py-3 cursor-pointer flex-1 transition-colors ${coData.payment === 'bank' ? 'border-primary-300 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}"
+          onclick="selectPayment('bank')">
+          <input type="radio" name="pay" value="bank" ${coData.payment === 'bank' ? 'checked' : ''} class="accent-primary-700">
+          <div>
+            <p class="text-sm font-medium text-gray-900">Bank Transfer</p>
+            <p class="text-xs text-gray-400">Net 30 terms</p>
+          </div>
+        </label>
+        <label class="flex items-center gap-2 border rounded px-4 py-3 cursor-pointer flex-1 transition-colors ${coData.payment === 'card' ? 'border-primary-300 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}"
+          onclick="selectPayment('card')">
+          <input type="radio" name="pay" value="card" ${coData.payment === 'card' ? 'checked' : ''} class="accent-primary-700">
+          <div>
+            <p class="text-sm font-medium text-gray-900">Credit Card</p>
+            <p class="text-xs text-gray-400">Instant payment</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- Bank Transfer Details -->
+      <div id="bank-details" class="${coData.payment === 'bank' ? '' : 'hidden'}">
+        <div class="border border-blue-100 bg-blue-50 rounded p-4 mb-4">
+          <p class="text-sm font-semibold text-blue-800 mb-2">Bank Transfer Instructions</p>
+          <div class="space-y-1 text-sm text-blue-700">
+            <p>Bank: <strong>First National Business Bank</strong></p>
+            <p>Account: <strong>1234-5678-9012</strong></p>
+            <p>Routing: <strong>021000021</strong></p>
+            <p>Reference: <strong>Use your Order ID when transferring</strong></p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400">Payment is due within 30 days of invoice date. Orders are processed upon receipt of payment.</p>
+      </div>
+
+      <!-- Credit Card Form -->
+      <div id="card-details" class="${coData.payment === 'card' ? '' : 'hidden'} space-y-4">
+        <div>
+          <label class="ph-label">Card Number</label>
+          <input type="text" class="ph-input font-mono" placeholder="1234  5678  9012  3456" maxlength="19"
+            value="${coData.cardNumber}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/(.{4})/g,'$1 ').trim();coData.cardNumber=this.value">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="ph-label">Expiry Date</label>
+            <input type="text" class="ph-input" placeholder="MM / YY" maxlength="7">
+          </div>
+          <div>
+            <label class="ph-label">CVV</label>
+            <input type="text" class="ph-input" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+        <div>
+          <label class="ph-label">Cardholder Name</label>
+          <input type="text" class="ph-input" placeholder="John Smith">
+        </div>
+      </div>
+
+      <div class="flex gap-3 justify-between pt-5">
+        <button onclick="goToStep(2)" class="btn btn-outline">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          Back
+        </button>
+        <button onclick="goToStep(4)" class="btn btn-primary">
+          Review Order
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>`;
+  }
+
+  function selectPayment(method) {
+    coData.payment = method;
+    renderStep3();
+  }
+
+  // ---- STEP 4: REVIEW ----
+  function renderStep4() {
+    const subtotal = getCartSubtotal();
+    const rate = shippingRates[coData.delivery];
+    const shipping = subtotal > 2000 ? 0 : rate.price;
+    const tax = subtotal * 0.08;
+    const total = subtotal + shipping + tax;
+
+    document.getElementById('step-form-container').innerHTML = `
+      <h3 class="font-display text-base font-semibold text-gray-900 mb-5">Review & Confirm</h3>
+
+      <div class="space-y-4">
+
+        <!-- Billing -->
+        <div class="border border-gray-100 rounded p-4">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Billing Address</p>
+            <button onclick="goToStep(1)" class="text-xs text-primary-700 hover:underline">Edit</button>
+          </div>
+          <p class="text-sm text-gray-900 font-medium">${coData.billing.company || 'Demo Company'}</p>
+          <p class="text-sm text-gray-600">${coData.billing.firstName || 'Demo'} ${coData.billing.lastName || 'User'}</p>
+          <p class="text-sm text-gray-600">${coData.billing.address1 || '123 Business Ave'}, ${coData.billing.city || 'New York'}, ${coData.billing.state || 'NY'} ${coData.billing.zip || '10001'}</p>
+        </div>
+
+        <!-- Delivery -->
+        <div class="border border-gray-100 rounded p-4">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Delivery Method</p>
+            <button onclick="goToStep(2)" class="text-xs text-primary-700 hover:underline">Edit</button>
+          </div>
+          <p class="text-sm text-gray-900">${shippingRates[coData.delivery].label}</p>
+          ${coData.poNumber ? `<p class="text-sm text-gray-500 mt-1">PO: ${coData.poNumber}</p>` : ''}
+        </div>
+
+        <!-- Payment -->
+        <div class="border border-gray-100 rounded p-4">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Payment</p>
+            <button onclick="goToStep(3)" class="text-xs text-primary-700 hover:underline">Edit</button>
+          </div>
+          <p class="text-sm text-gray-900">${coData.payment === 'bank' ? 'Bank Transfer (Net 30)' : 'Credit Card'}</p>
+        </div>
+
+        <!-- Items -->
+        <div class="border border-gray-100 rounded overflow-hidden">
+          <div class="px-4 py-3 border-b border-gray-100">
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Items (${getCartCount()})</p>
+          </div>
+          <div class="divide-y divide-gray-50">
+            ${phCart.map(item => `
+              <div class="flex items-center gap-3 px-4 py-3">
+                <img src="${item.image}" class="w-10 h-10 rounded object-cover border border-gray-100 shrink-0">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-gray-900 truncate">${item.name}</p>
+                  <p class="text-xs text-gray-400">${item.sku} × ${item.qty}</p>
+                </div>
+                <span class="text-sm font-semibold text-gray-900">$${(item.price * item.qty).toFixed(2)}</span>
+              </div>`).join('')}
+          </div>
+          <div class="px-4 py-3 bg-gray-50 flex justify-between border-t border-gray-100">
+            <span class="text-sm font-semibold text-gray-900">Order Total</span>
+            <span class="font-display text-base font-bold text-gray-900">$${total.toFixed(2)}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex gap-3 justify-between pt-5">
+        <button onclick="goToStep(3)" class="btn btn-outline">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          Back
+        </button>
+        <button onclick="placeOrder()" class="btn btn-primary px-8">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Place Order
+        </button>
+      </div>`;
+  }
+
+  // ---- NAVIGATION ----
+  function goToStep(step) {
+    currentStep = step;
+    renderStepIndicator();
+    renderCoSummary();
+    if (step === 1) renderStep1();
+    else if (step === 2) renderStep2();
+    else if (step === 3) renderStep3();
+    else if (step === 4) renderStep4();
+  }
+
+  // ---- PLACE ORDER ----
+  function placeOrder() {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Processing…`;
+
+    setTimeout(() => {
+      const orderId = 'ORD-2024-' + (Math.floor(Math.random() * 900) + 100);
+      const subtotal = getCartSubtotal();
+      const rate = shippingRates[coData.delivery];
+      const shipping = subtotal > 2000 ? 0 : rate.price;
+      const tax = subtotal * 0.08;
+      const total = subtotal + shipping + tax;
+
+      // Show success screen
+      document.getElementById('checkout-main').classList.add('hidden');
+      document.getElementById('success-screen').classList.remove('hidden');
+      document.getElementById('success-order-id').textContent = `Order ${orderId}`;
+
+      document.getElementById('success-summary').innerHTML = `
+        <div class="flex justify-between text-sm text-gray-600">
+          <span>Order ID</span><span class="font-medium text-gray-900">${orderId}</span>
+        </div>
+        <div class="flex justify-between text-sm text-gray-600">
+          <span>Items</span><span class="font-medium text-gray-900">${getCartCount()}</span>
+        </div>
+        <div class="flex justify-between text-sm text-gray-600">
+          <span>Delivery</span><span class="font-medium text-gray-900">${rate.label.split('(')[0].trim()}</span>
+        </div>
+        <div class="flex justify-between text-sm text-gray-600">
+          <span>Payment</span><span class="font-medium text-gray-900">${coData.payment === 'bank' ? 'Bank Transfer (Net 30)' : 'Credit Card'}</span>
+        </div>
+        <div class="border-t border-gray-100 pt-3 flex justify-between">
+          <span class="font-semibold text-gray-900">Total</span>
+          <span class="font-display font-bold text-gray-900">$${total.toFixed(2)}</span>
+        </div>`;
+
+      // Clear cart
+      phCart = [];
+      saveCart();
+    }, 1500);
+  }
+
+  // ---- INIT ----
+  renderCoSummary();
+  goToStep(1);
+
+  // Prefill demo data
+  coData.billing = {
+    company: 'Demo Company Inc.',
+    firstName: 'Demo', lastName: 'User',
+    address1: '123 Business Avenue', address2: 'Suite 400',
+    city: 'New York', state: 'NY', zip: '10001', country: 'United States'
+  };
+</script>
+</body>
+</html>
