@@ -60,11 +60,22 @@
 
           <hr class="my-6 border-gray-100">
 
-          <h3 class="font-display font-bold text-gray-900 tracking-tight mb-4">Divisions</h3>
-          <div class="space-y-2">
-            <button class="w-full text-left p-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-primary-700 transition-colors">Watches</button>
-            <button class="w-full text-left p-2 rounded-lg text-xs font-bold text-primary-700 bg-primary-50">Fashion & Style</button>
-            <button class="w-full text-left p-2 rounded-lg text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-primary-700 transition-colors">Beauty (Non-Liquid)</button>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-display font-bold text-gray-900 tracking-tight">Divisions</h3>
+            <button class="p-1.5 rounded-md text-slate-400 hover:text-primary-600 hover:bg-primary-50 transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
+          </div>
+          <div class="space-y-1 select-none">
+            <div class="tree-item selected" onclick="selectTreeItem(this)">
+              <span class="tree-label">Watches</span>
+            </div>
+            <div class="tree-item" onclick="selectTreeItem(this)">
+              <span class="tree-label">Fashion & Style</span>
+            </div>
+            <div class="tree-item" onclick="selectTreeItem(this)">
+              <span class="tree-label">Beauty (Non-Liquid)</span>
+            </div>
           </div>
         </div>
       </aside>
@@ -78,17 +89,17 @@
              <p class="text-sm text-gray-400 mt-1">Review items currently marked as non-sellable.</p>
            </div>
            
-           <div class="relative w-full md:max-w-sm">
-             <input type="text" class="ph-input pl-10 py-2.5 text-xs shadow-sm border-gray-100" placeholder="Search damaged records...">
-             <svg class="w-3.5 h-3.5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-           </div>
+            <div class="relative w-full md:max-w-sm group">
+              <input type="text" class="ph-input pl-12 py-2.5 text-xs shadow-sm hover:border-primary-300 transition-all focus:ring-4 focus:ring-primary-50" placeholder="Search damaged records...">
+              <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
         </div>
 
         <!-- Damaged Stock Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           
           <!-- Damage Card 1 -->
-          <div class="ph-card overflow-hidden bg-white border-red-50">
+          <div class="ph-card ph-card-damage overflow-hidden">
             <div class="aspect-[4/3] relative bg-gray-50">
               <img src="https://images.unsplash.com/photo-1549462980-6a0149021465?w=400&q=80" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-red-900/10 flex items-center justify-center backdrop-grayscale-[0.5]">
@@ -102,7 +113,7 @@
                </div>
                <p class="text-[10px] font-mono text-gray-400 mb-6">SKU: PKG-LDR-01 / ITEM: E7232</p>
                
-               <div class="space-y-3 pt-4 border-t border-gray-50 mb-6">
+               <div class="space-y-3 pt-4 border-t border-gray-100/50 mb-6">
                   <div class="flex justify-between text-xs">
                     <span class="text-gray-400">Damaged Quantity</span>
                     <span class="font-bold text-red-600">08 Units</span>
@@ -113,15 +124,15 @@
                   </div>
                </div>
 
-               <div class="grid grid-cols-2 gap-3">
-                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 border border-gray-100 rounded hover:bg-gray-50 transition-colors">Discard</button>
-                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-primary-600 bg-primary-50 rounded hover:bg-primary-100 transition-colors">Repair Request</button>
+               <div class="flex gap-3">
+                 <button class="btn btn-outline flex-1 justify-center text-[10px] uppercase tracking-wider py-2">Discard</button>
+                 <button class="btn btn-primary flex-1 justify-center text-[10px] uppercase tracking-wider py-2">Repair Request</button>
                </div>
             </div>
           </div>
 
           <!-- Damage Card 2 -->
-          <div class="ph-card overflow-hidden bg-white border-red-50">
+          <div class="ph-card ph-card-damage overflow-hidden">
             <div class="aspect-[4/3] relative bg-gray-50">
               <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-red-900/10 flex items-center justify-center backdrop-grayscale-[0.5]">
@@ -135,7 +146,7 @@
                </div>
                <p class="text-[10px] font-mono text-gray-400 mb-6">SKU: WAT-BRC-S / ITEM: E7721</p>
                
-               <div class="space-y-3 pt-4 border-t border-gray-50 mb-6">
+               <div class="space-y-3 pt-4 border-t border-gray-100/50 mb-6">
                   <div class="flex justify-between text-xs">
                     <span class="text-gray-400">Damaged Quantity</span>
                     <span class="font-bold text-red-600">14 Units</span>
@@ -146,9 +157,9 @@
                   </div>
                </div>
 
-               <div class="grid grid-cols-2 gap-3">
-                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 border border-gray-100 rounded hover:bg-gray-50 transition-colors">Discard</button>
-                 <button class="py-2 text-[10px] font-bold uppercase tracking-wider text-primary-600 bg-primary-50 rounded hover:bg-primary-100 transition-colors">Repackage</button>
+               <div class="flex gap-3">
+                 <button class="btn btn-outline flex-1 justify-center text-[10px] uppercase tracking-wider py-2">Discard</button>
+                 <button class="btn btn-primary flex-1 justify-center text-[10px] uppercase tracking-wider py-2">Repackage</button>
                </div>
             </div>
           </div>
@@ -164,6 +175,11 @@
 <script src="js/app.js"></script>
 <script>
   initPage('damaged-stock', 'Damaged Stock');
+
+  function selectTreeItem(element) {
+    document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+  }
 </script>
 </body>
 </html>

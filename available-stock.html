@@ -40,71 +40,65 @@
         <div class="ph-card p-6 sticky top-24">
           <div class="flex items-center justify-between mb-6">
             <h3 class="font-display font-bold text-slate-900 tracking-tight">Divisions</h3>
-            <button class="p-1 text-slate-400 hover:text-primary-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+            <div class="flex gap-2">
+              <button class="p-1.5 rounded-md text-slate-400 hover:text-primary-600 hover:bg-primary-50 transition-all">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </button>
+            </div>
           </div>
           
           <div class="space-y-1 select-none">
             <!-- Level 1 -->
             <div class="space-y-1">
-              <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
-                <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
+              <div class="tree-item group" onclick="toggleTree(this); selectTreeItem(this)">
                 <svg class="tree-chevron w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <span class="text-[13px] font-bold text-gray-900">Watches & Fine Jewelry</span>
+                <span class="tree-label bold">Watches & Fine Jewelry</span>
               </div>
               
               <!-- Level 2 Container -->
-              <div class="tree-content pl-7 space-y-1 border-l border-gray-100 ml-3.5">
-                <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
-                  <svg class="tree-chevron w-3.5 h-3.5 text-gray-400 transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                  <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-                  <span class="text-xs font-medium text-gray-600">Marketing CRM</span>
+              <div class="tree-content tree-guide">
+                <div class="tree-item group" onclick="toggleTree(this); selectTreeItem(this)">
+                  <svg class="tree-chevron w-3.5 h-3.5 text-gray-400 Transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <span class="tree-label">Marketing CRM</span>
                 </div>
                 
                 <!-- Level 3 Container -->
-                <div class="tree-content pl-8 space-y-1">
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs font-medium text-slate-500 group-hover:text-primary-700 transition-colors">Gift</span>
-                  </label>
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs font-medium text-slate-500 group-hover:text-primary-700 transition-colors">Marketing Tools-Wfj</span>
-                  </label>
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs font-medium text-slate-500 group-hover:text-primary-700 transition-colors">Packaging</span>
-                  </label>
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs font-medium text-slate-500 group-hover:text-primary-700 transition-colors">Marketing Crm</span>
-                  </label>
+                <div class="tree-content pl-4 space-y-0.5 mt-1 border-l border-gray-50/50">
+                  <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Gift</span>
+                  </div>
+                  <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Marketing Tools-Wfj</span>
+                  </div>
+                  <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Packaging</span>
+                  </div>
+                  <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Marketing Crm</span>
+                  </div>
                 </div>
 
-                <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
-                  <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                  <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-                  <span class="text-xs font-medium text-gray-600">Operations/Boutiques</span>
+                <div class="tree-item group" onclick="selectTreeItem(this)">
+                  <svg class="w-3.5 h-3.5 text-gray-300 opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <span class="tree-label text-gray-600">Operations/Boutiques</span>
                 </div>
-                <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
-                  <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                  <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-                  <span class="text-xs font-medium text-gray-600">Marketing Event</span>
+                <div class="tree-item group" onclick="toggleTree(this); selectTreeItem(this)">
+                  <svg class="tree-chevron w-3.5 h-3.5 text-gray-400 group-hover:text-primary-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <span class="tree-label text-gray-600">Marketing Event</span>
                 </div>
               </div>
             </div>
 
             <!-- PR -->
-            <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
-              <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-              <span class="text-[13px] font-bold text-gray-900 uppercase">PR</span>
+            <div class="tree-item group" onclick="selectTreeItem(this)">
+              <svg class="w-4 h-4 text-gray-300 opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              <span class="tree-label bold uppercase tracking-wider">PR</span>
             </div>
 
             <!-- Uniforms -->
-            <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
-              <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-              <span class="text-[13px] font-bold text-gray-900 uppercase">Uniforms</span>
+            <div class="tree-item group" onclick="selectTreeItem(this)">
+              <svg class="w-4 h-4 text-gray-300 opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              <span class="tree-label bold uppercase tracking-wider">Uniforms</span>
             </div>
           </div>
         </div>
@@ -116,9 +110,9 @@
         <!-- Top Toolbar -->
         <div class="mb-8 space-y-4">
           <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-             <div class="relative w-full md:max-w-xl">
-               <input type="text" class="ph-input pl-10 py-3 text-sm shadow-sm border-gray-100" placeholder="Search by SKU / Display No. / Description...">
-               <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+             <div class="relative w-full md:max-w-xl group">
+               <input type="text" class="ph-input pl-12 py-3.5 text-sm shadow-sm border-gray-100 hover:border-primary-300 transition-all focus:ring-4 focus:ring-primary-50" placeholder="Search by SKU / Display No. / Description...">
+               <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
              </div>
              <div class="flex items-center gap-3 w-full md:w-auto">
                <select class="ph-input text-xs py-2 shadow-sm border-gray-100">
@@ -142,15 +136,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           
           <!-- Card 1 -->
-          <div class="ph-card group overflow-hidden flex flex-col bg-white" >
-            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='item-master-detail.html'">
+          <div class="ph-card group overflow-hidden flex flex-col bg-white">
+            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='product-detail.html'">
               <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <div class="absolute top-3 right-3">
                 <span class="badge badge-green shadow-sm text-[8px] px-1.5 py-0.5">Active</span>
               </div>
             </div>
             <div class="p-4 flex-1 flex flex-col">
-              <div class="cursor-pointer mb-2" onclick="location.href='item-master-detail.html'">
+              <div class="cursor-pointer mb-2" onclick="location.href='product-detail.html'">
                 <h4 class="text-sm font-bold text-gray-900 group-hover:text-primary-700 transition-colors">Premium Classic Watch</h4>
                 <p class="text-[9px] font-mono text-gray-400">SKU: WAT-X102</p>
               </div>
@@ -167,8 +161,8 @@
                 <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 active:scale-95 transition-all text-gray-400 hover:text-gray-900" onclick="updateQty(this, 1)">+</button>
               </div>
               
-              <button onclick="addToOrder(this, 10)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button onclick="addToOrder(this, 10)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 group">
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Add To Order
               </button>
             </div>
@@ -176,11 +170,11 @@
 
           <!-- Card 2 -->
           <div class="ph-card group overflow-hidden flex flex-col bg-white">
-            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='item-master-detail.html'">
+            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='product-detail.html'">
               <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-4 flex-1 flex flex-col">
-              <div class="cursor-pointer mb-2" onclick="location.href='item-master-detail.html'">
+              <div class="cursor-pointer mb-2" onclick="location.href='product-detail.html'">
                 <h4 class="text-sm font-bold text-gray-900 group-hover:text-primary-700 transition-colors">Executive Chronograph</h4>
                 <p class="text-[9px] font-mono text-gray-400">SKU: WAT-GLD-02</p>
               </div>
@@ -196,8 +190,8 @@
                 <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" onclick="updateQty(this, 1)">+</button>
               </div>
               
-              <button onclick="addToOrder(this, 3)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button onclick="addToOrder(this, 3)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 group">
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Add To Order
               </button>
             </div>
@@ -205,45 +199,61 @@
 
           <!-- Card 3 -->
           <div class="ph-card group overflow-hidden flex flex-col bg-white">
-            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50">
+            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='product-detail.html'">
               <img src="https://images.unsplash.com/photo-1549462980-6a0149021465?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="p-5 flex-1 flex flex-col">
-              <h4 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Velvet Pouch Set of 5</h4>
-              <p class="text-[10px] font-mono text-gray-400 mb-4">SKU: PKG-PCH-5 / DISP: E9012</p>
-              
-              <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between mb-4">
-                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Available:</span>
-                 <span class="text-lg font-black text-amber-600 leading-none">12</span>
+            <div class="p-4 flex-1 flex flex-col">
+              <div class="cursor-pointer mb-2" onclick="location.href='product-detail.html'">
+                <h4 class="text-sm font-bold text-gray-900 group-hover:text-primary-700 transition-colors">Velvet Pouch Set of 5</h4>
+                <p class="text-[9px] font-mono text-gray-400">SKU: PKG-PCH-5 / DISP: E9012</p>
+              </div>
+
+              <div class="flex items-center justify-between text-[10px] mb-4 bg-gray-50/50 p-2 rounded">
+                 <span class="font-bold text-gray-400 uppercase tracking-tighter">Stock</span>
+                 <span class="font-black text-gray-900">12 Units</span>
+              </div>
+
+              <div class="flex items-center gap-2 mb-4">
+                <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" onclick="updateQty(this, -1)">-</button>
+                <input type="number" value="1" class="flex-1 w-full bg-white border border-gray-100 rounded h-8 text-center text-xs font-bold" min="1">
+                <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" onclick="updateQty(this, 1)">+</button>
               </div>
               
-              <button class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Add To Cart
+              <button onclick="addToOrder(this, 5)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 group">
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Add To Order
               </button>
             </div>
           </div>
 
           <!-- Card 4 (Low Stock) -->
-          <div class="ph-card group overflow-hidden flex flex-col bg-white">
-            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50">
+          <div class="ph-card group overflow-hidden flex flex-col bg-white text-slate-900">
+            <div class="aspect-square relative overflow-hidden bg-gray-50 border-b border-gray-50 cursor-pointer" onclick="location.href='product-detail.html'">
               <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <div class="absolute top-3 right-3">
-                <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm">Low Stock</span>
+                <span class="bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg">Low Stock</span>
               </div>
             </div>
-            <div class="p-5 flex-1 flex flex-col">
-              <h4 class="text-sm font-bold text-gray-900 mb-1 leading-snug">Titanium Slim Chrono-40</h4>
-              <p class="text-[10px] font-mono text-gray-400 mb-4">SKU: WAT-SLM-4X / DISP: E8934</p>
-              
-              <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between mb-4">
-                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Available:</span>
-                 <span class="text-lg font-black text-red-500 leading-none">2</span>
+            <div class="p-4 flex-1 flex flex-col">
+              <div class="cursor-pointer mb-2" onclick="location.href='product-detail.html'">
+                <h4 class="text-sm font-bold text-gray-900 group-hover:text-primary-700 transition-colors">Titanium Slim Chrono-40</h4>
+                <p class="text-[9px] font-mono text-gray-400">SKU: WAT-SLM-4X / DISP: E8934</p>
+              </div>
+
+              <div class="flex items-center justify-between text-[10px] mb-4 bg-red-50/50 p-2 rounded">
+                 <span class="font-bold text-red-500 uppercase tracking-tighter">Stock</span>
+                 <span class="font-black text-red-600">2 Units</span>
+              </div>
+
+              <div class="flex items-center gap-2 mb-4">
+                <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" onclick="updateQty(this, -1)">-</button>
+                <input type="number" value="1" class="flex-1 w-full bg-white border border-gray-100 rounded h-8 text-center text-xs font-bold" min="1">
+                <button class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" onclick="updateQty(this, 1)">+</button>
               </div>
               
-              <button class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Add To Cart
+              <button onclick="addToOrder(this, 1)" class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 group">
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Add To Order
               </button>
             </div>
           </div>
@@ -278,6 +288,7 @@
   initPage('available-stock', 'Available Stock');
 
   function toggleTree(element) {
+    event.stopPropagation();
     const container = element.parentElement;
     const content = container.querySelector('.tree-content');
     const chevron = element.querySelector('.tree-chevron');
@@ -288,6 +299,12 @@
         chevron.classList.toggle('collapsed');
       }
     }
+  }
+
+  function selectTreeItem(element) {
+    event.stopPropagation();
+    document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
   }
 
   function updateQty(btn, delta) {

@@ -80,6 +80,15 @@ function updateCartQty(productId, qty) {
   }
 }
 
+function clearCart() {
+  if (phCart.length === 0) return;
+  if (confirm('Are you sure you want to clear all items from your cart?')) {
+    phCart = [];
+    saveCart();
+    refreshCartDrawer();
+  }
+}
+
 function updateCartBadge() {
   const badges = document.querySelectorAll('.cart-count-badge');
   const count = getCartCount();
@@ -158,6 +167,38 @@ function showGenericToast(message, type = 'success') {
     toast.style.opacity = '0';
     toast.style.transform = 'translate(-50%, 20px)';
   }, 3000);
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('ph_theme', isDark ? 'dark' : 'light');
+  updateThemeIcons();
+}
+
+function updateThemeIcons() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const lightIcon = document.getElementById('theme-icon-light');
+  const darkIcon = document.getElementById('theme-icon-dark');
+  
+  if (lightIcon && darkIcon) {
+    if (isDark) {
+      lightIcon.classList.remove('hidden');
+      darkIcon.classList.add('hidden');
+    } else {
+      lightIcon.classList.add('hidden');
+      darkIcon.classList.remove('hidden');
+    }
+  }
+}
+
+function applySavedTheme() {
+  const saved = localStorage.getItem('ph_theme');
+  if (saved === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  updateThemeIcons();
 }
 
 // ------------------------------------------------
@@ -272,11 +313,22 @@ function getHeaderHTML(title) {
         <h1 class="text-sm font-semibold text-gray-900 tracking-tight">${title}</h1>
 
         <div class="flex items-center gap-2 ml-auto">
+          <!-- Theme Toggle -->
+          <button onclick="toggleTheme()" class="p-2 rounded text-slate-500 hover:bg-slate-100 hover:text-primary-700 transition-colors group relative" id="theme-toggle" title="Toggle Theme">
+            <svg id="theme-icon-light" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+            </svg>
+            <svg id="theme-icon-dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+
           <!-- Export Button -->
-          <button onclick="exportData()" class="p-2 rounded text-slate-500 hover:bg-slate-100 hover:text-primary-700 transition-colors group relative" title="Export Data">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button onclick="exportData()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-primary-700 transition-colors group relative border border-transparent hover:border-slate-200" title="Export Data">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
+            <span class="text-[10px] font-black uppercase tracking-widest">Stock Report</span>
           </button>
 
           <!-- Cart Button -->
@@ -377,12 +429,13 @@ function refreshCartDrawer() {
       `</div>`;
 
     footerEl.innerHTML = `
-      <div class="flex justify-between text-sm text-gray-600">
+      <div class="flex justify-between text-sm text-gray-600 mb-1">
         <span>Total Items</span>
         <span class="font-bold text-gray-900">${getCartCount()} Units</span>
       </div>
-      <div class="pt-2">
+      <div class="space-y-2 pt-2">
         <a href="checkout.html" class="block w-full text-center text-sm font-bold text-white bg-primary-700 rounded-lg px-4 py-3 hover:bg-primary-800 transition-all shadow-md uppercase tracking-wider">Proceed to Checkout</a>
+        <button onclick="clearCart()" class="block w-full text-center text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors py-1">Clear All Items</button>
       </div>`;
   }
   updateCartBadge();
@@ -434,6 +487,7 @@ function closeCartDrawer() {
 // PAGE INIT
 // ------------------------------------------------
 function initPage(activePage, pageTitle) {
+  applySavedTheme();
   checkAuth();
 
   // Inject sidebar

@@ -46,45 +46,43 @@
         <div class="ph-card p-6 sticky top-24">
           <div class="flex items-center justify-between mb-6">
             <h3 class="font-display font-bold text-gray-900 tracking-tight">Divisions</h3>
-            <button class="p-1 text-gray-400 hover:text-primary-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+            <button class="p-1.5 rounded-md text-slate-400 hover:text-primary-600 hover:bg-primary-50 transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
           </div>
           
           <div class="space-y-1 select-none">
             <!-- Level 1 -->
             <div class="space-y-1">
-              <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
-                <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
+              <div class="tree-item group" onclick="toggleTree(this); selectTreeItem(this)">
                 <svg class="tree-chevron w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <span class="text-[13px] font-bold text-gray-900">Watches & Fine Jewelry</span>
+                <span class="tree-label bold">Watches & Fine Jewelry</span>
               </div>
               
-              <div class="tree-content pl-7 space-y-1 border-l border-gray-100 ml-3.5">
-                <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors" onclick="toggleTree(this)">
+              <div class="tree-content tree-guide">
+                <div class="tree-item group" onclick="toggleTree(this); selectTreeItem(this)">
                   <svg class="tree-chevron w-3.5 h-3.5 text-gray-400 Transition-transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                  <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-                  <span class="text-xs font-medium text-gray-600">Marketing CRM</span>
+                  <span class="tree-label">Marketing CRM</span>
                 </div>
                 
-                <div class="tree-content pl-8 space-y-1">
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs text-gray-500 group-hover:text-primary-700 transition-colors">Gift</span>
-                  </label>
-                  <label class="flex items-center gap-3 py-1 group cursor-pointer">
-                    <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs text-gray-500 group-hover:text-primary-700 transition-colors">Marketing Tools</span>
-                  </label>
+                <div class="tree-content pl-4 space-y-0.5 mt-1 border-l border-gray-50/50">
+                   <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Gift</span>
+                  </div>
+                  <div class="tree-item" onclick="selectTreeItem(this)">
+                    <span class="tree-label text-slate-500">Marketing Tools</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- PR -->
-            <div class="flex items-center gap-2 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
-              <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" onclick="event.stopPropagation()">
-              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-              <span class="text-[13px] font-bold text-gray-900 uppercase">PR</span>
+            <div class="tree-item group" onclick="selectTreeItem(this)">
+              <svg class="w-4 h-4 text-gray-300 opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              <span class="tree-label bold uppercase tracking-wider">PR</span>
             </div>
           </div>
+
 
           <hr class="my-6 border-gray-100">
 
@@ -192,6 +190,7 @@
   initPage('store-stock', 'Store Stock');
 
   function toggleTree(element) {
+    event.stopPropagation();
     const container = element.parentElement;
     const content = container.querySelector('.tree-content');
     const chevron = element.querySelector('.tree-chevron');
@@ -202,6 +201,12 @@
         chevron.classList.toggle('collapsed');
       }
     }
+  }
+
+  function selectTreeItem(element) {
+    event.stopPropagation();
+    document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
   }
 </script>
 </body>

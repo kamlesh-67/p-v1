@@ -250,7 +250,7 @@
   criticalItems.forEach(p => {
     const isOut = p.stock === 0;
     alertList.innerHTML += `
-      <div class="flex items-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer" onclick="location.href='item-master-detail.html'">
+      <div class="flex items-center gap-3 px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer" onclick="location.href='product-detail.html'">
         <img src="${p.image}" class="w-10 h-10 rounded border border-gray-100 object-cover shrink-0 grayscale-[0.5]">
         <div class="flex-1 min-w-0">
           <p class="text-[11px] font-bold text-gray-900 truncate tracking-tight">${p.name}</p>
